@@ -52,5 +52,8 @@ public class VideoPoker {
 				);
 		System.out.println(deck.countCards());
 		
+		
+		System.out.println(deck.drawCards(5));
+		System.out.println(deck.countCards());
 	}
 }

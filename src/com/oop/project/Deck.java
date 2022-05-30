@@ -1,13 +1,13 @@
 package com.oop.project;
 
-import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 
 class Deck {
 	
 	private Set<Card> deck;
-	EnumSet<Rank> set;
 
 	Deck() {	
 		deck = new HashSet<>();
@@ -68,6 +68,33 @@ class Deck {
 				listOfCardsAdded.add(card);
 		
 		return listOfCardsAdded;
+	}
+	
+	// Draws one card.
+	private Card draw() {
+		Iterator<Card> itr = deck.iterator();
+		Random random = new Random();
+		int randNum = random.nextInt(deck.size());
+		int i = 0; // variable used in for cycle to iterate through the deck
+		
+		for(i = 0; i < randNum; i++)
+			itr.next();
+		
+		return itr.next();
+	}
+	// Draws and removes cards from the deck.
+	public Set<Card> drawCards(int total) {
+		Set<Card> cards = new HashSet<>();
+		Card card = null;
+		int i = 0;
+		
+		for(i = 0; i < total; i++) {
+			card = draw();
+			cards.add(card);
+			deck.remove(card);
+		}
+		
+		return cards;
 	}
 	
 	@Override
