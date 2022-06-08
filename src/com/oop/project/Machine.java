@@ -1,59 +1,82 @@
 package com.oop.project;
 
-public class VideoPoker {
 
-	public static void main(String[] args) {
+public class Machine {
+
+	
+	private char[] cmd;
+	
+	//
+	private char[] card;
+	
+	// Stores the name of the card-file.txt file. It can be different from 'card-file.txt'.
+	private String cardFileName;
+
+	// Stores a pointer to cmd-file.txt file. It can be different from 'cmd-file.txt'.
+	private String cmdFileName;
+	
+	// Store the total amount of credits available to the player.
+	private int credits;
+	
+	// Stores the present deck being played
+	private Deck deck;
+	
+	// Stores game mode type. (d)debug mode or (s)simulation mode.
+	private char mode;
+	
+	
+	// Constructor
+	Machine() {
+		this.credits = 0;
+		this.cardFileName = "";
+		this.cmdFileName= "";
 		
-		// Initializes a deck with 2 jokers. There are no repeated cards
-		Deck deck = new Deck();
-		
-		// Prints the total number of cards in the deck.
-		System.out.println(deck.countCards());
-		
-		// Adds BJOKER (black joker) and RJOKER (red joker).
-		// It returns an array of the cards successfully added to the deck.
-		// If the cards are in the deck, they aren't display in the return array.
-		System.out.println(
-				deck.addCards(new Card[] {new Card(Rank.BJOKER,Suit.BJOKER), new Card(Rank.RJOKER,Suit.RJOKER)})
-				);
-		
-		// Prints the total number of cards in the deck.
-		System.out.println(deck.countCards());
-		
-		// Removes the cards from the deck.
-		// It's trying to remove BJOKER(black joker) and RJOKER(red joker).
-		// Cards successfully removed are returned as an array.
-		// Cards that aren't removed (already removed from the deck) don't show on the array.
-		System.out.println(
-				deck.removeCards(new Card[] {new Card(Rank.BJOKER,Suit.BJOKER), new Card(Rank.RJOKER,Suit.RJOKER)})
-				);
-		
-		// Prints the total number of cards in the deck.
-		System.out.println(deck.countCards());
-		// This time the resulting array is empty since the jokers were already removed.
-		System.out.println(
-				deck.removeCards(new Card[] {new Card(Rank.BJOKER,Suit.BJOKER), new Card(Rank.RJOKER,Suit.RJOKER)})
-				);
-		
-		System.out.println(deck.countCards());
-		// Reads the jokers and they are displayed in the array.
-		System.out.println(
-				deck.addCards(new Card[] {new Card(Rank.BJOKER,Suit.BJOKER), new Card(Rank.RJOKER,Suit.RJOKER)})
-				);
-		
-		// Will try to remove the same card twice.
-		System.out.println(deck.countCards());
-		System.out.println(
-				deck.removeCards(new Card[] {new Card(Rank.A,Suit.SPADES)})
-				);
-		System.out.println(deck.countCards());
-		System.out.println(
-				deck.removeCards(new Card[] {new Card(Rank.A,Suit.SPADES)})
-				);
-		System.out.println(deck.countCards());
-		
-		
-		System.out.println(deck.drawCards(5));
-		System.out.println(deck.countCards());
+		// It starts in debug mode by default.
+		this.mode = 'd';
 	}
+	
+	
+	
+	public int getCredits() {
+		return credits;
+	}	
+	
+	public String getFileCard() {
+		return cardFileName;
+	}
+
+	public String getFileCmd() {
+		return cmdFileName;
+	}
+	
+	public Deck getDeck() {
+		return deck;
+	}
+	
+	public char getMode() {
+		return mode;
+	}
+	
+	public void setCredits(int credits) {
+		this.credits = credits;
+	}
+	
+	public void setFileCard(String cardFileName) {
+		this.cardFileName = cardFileName;
+	}
+	
+	public void setFileCmd(String cmdFileName) {
+		this.cardFileName = cmdFileName;
+	}
+	
+	public void setDeck(Deck deck) {
+		this.deck = deck;
+	}
+
+	public void setMode(char mode) {
+		this.mode = mode;
+	}
+	
+	
+	
 }

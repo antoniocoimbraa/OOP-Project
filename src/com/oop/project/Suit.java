@@ -1,23 +1,45 @@
 package com.oop.project;
 
-
-//Nested enum only make sense to cards
 enum Suit {
+	// 4 suits + 2 jokers
+	CLUBS('C'), DIAMONDS('D'), HEARTS('H'), SPADES('S'),
+	// Black and white joker (fOol)
+	BWJOKER('O'),
+	// Colored joker (fooL)
+	CJOKER('L');
 	
 	
-	CLUBS("C"), DIAMONDS("D"), HEARTS("H"), SPADES("S"), 
-	BJOKER("BJ"), RJOKER("RJ");
 	
+	private final char suit;
 	
-	private final String suit;
+
 	
-	
-	Suit(String suit) {
+	Suit(char suit) {
 		this.suit = suit;
 	}
 	
+	// Check if the current enum set as an element with equal value
+	public static Suit belong(char value) {
+		switch(value) {
+			case 'C':
+				return Suit.CLUBS;
+			case 'D':
+				return Suit.DIAMONDS;
+			case 'H':
+				return Suit.HEARTS;
+			case 'S':
+				return Suit.SPADES;
+			case 'O':
+				return Suit.BWJOKER;
+			case 'L':
+				return Suit.CJOKER;
+			default:
+				return null;
+		}
+	}
 	
+	@Override
 	public String toString() {
-		return suit;
+		return String.valueOf(suit);
 	}
 }

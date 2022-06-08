@@ -3,14 +3,20 @@ package com.oop.project;
 import java.util.Objects;
 
 class Card {
-
+	
 	private final Rank rank;
 	private final Suit suit;
 	
-	Card (Rank rank, Suit suit) {
-		this.rank = rank;
-		this.suit = suit;
+	// by convention: 3C (rank, suit)
+	Card (String card) {
+		// by convention: rankSuit[0] = rank, rankSuit[1] = suit 
+		char[] rankSuit = card.toCharArray();
+
+		this.rank = Rank.belong(rankSuit[0]);
+		this.suit = Suit.belong(rankSuit[1]);
 	}
+	
+	
 	
 	public Rank getRank() {
 		return rank;
@@ -20,12 +26,11 @@ class Card {
 		return suit;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
-		if(rank == Rank.BJOKER || rank == Rank.RJOKER)
-			return rank + "";
-		else
-			return rank + " of " + suit;
+		return rank.toString() + suit.toString();
 	}
 
 	@Override
