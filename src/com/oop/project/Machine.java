@@ -1,13 +1,10 @@
 package com.oop.project;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Machine {
-
-	
-	private char[] cmd;
-	
-	//
-	private char[] card;
 	
 	// Stores the name of the card-file.txt file. It can be different from 'card-file.txt'.
 	private String cardFileName;
@@ -15,8 +12,14 @@ public class Machine {
 	// Stores a pointer to cmd-file.txt file. It can be different from 'cmd-file.txt'.
 	private String cmdFileName;
 	
+	// 
+	private String[] cmdList;
+	
+	//
+	private String[] cardList;
+	
 	// Store the total amount of credits available to the player.
-	private int credits;
+	private int credit;
 	
 	// Stores the present deck being played
 	private Deck deck;
@@ -25,20 +28,49 @@ public class Machine {
 	private char mode;
 	
 	
-	// Constructor
-	Machine() {
-		this.credits = 0;
-		this.cardFileName = "";
-		this.cmdFileName= "";
+	// CONSTRUCTOR
+	// TODO: code for simulation mode
+	Machine(String[] cmmdLine) {
+	
+		char mode = cmmdLine[0].toCharArray()[1];
 		
-		// It starts in debug mode by default.
+		switch(mode) {
+		case 'd':
+			this.cardFileName = cmmdLine[2];
+			this.cmdFileName = cmmdLine[3];
+			this.cardList = parseFile(cmmdLine[2]);
+			this.cmdList = parseFile(cmmdLine[3]);
+			this.credit = (int) Integer.parseInt(cmmdLine[1]);
+			this.deck = new Deck();
+			this.mode = cmmdLine[0].toCharArray()[1];
+			break;
+		case 's':
+			break;
+			default:
+				System.out.println("Machine constructor failed!");
+		}
+		
+
+	}
+	
+	
+	// CONSTRUCTOR for debug mode
+	Machine(int credit, String cardFileName, String cmdFileName) {
+		this.cardFileName = cardFileName;
+		this.cmdFileName = cmdFileName;
+		this.cardList = parseFile(cardFileName);
+		this.cmdList = parseFile(cmdFileName);
+		this.credit = credit;
+		this.deck = new Deck();
 		this.mode = 'd';
 	}
 	
 	
 	
+	// DEFAULT GETTER AND SETTER
+	
 	public int getCredits() {
-		return credits;
+		return credit;
 	}	
 	
 	public String getFileCard() {
@@ -58,7 +90,7 @@ public class Machine {
 	}
 	
 	public void setCredits(int credits) {
-		this.credits = credits;
+		this.credit = credits;
 	}
 	
 	public void setFileCard(String cardFileName) {
@@ -79,4 +111,35 @@ public class Machine {
 	
 	
 	
+	// METHODS
+	
+	// ParseFile
+	public String[] parseFile(String cmdFileName) {
+		
+		File fp = new File(cmdFileName);
+		Scanner sc = null;
+		
+		String data = "";
+		
+		try {
+			sc = new Scanner(fp);
+			while(sc.hasNextLine()) {
+				data = sc.nextLine();
+			}
+			sc.close();
+			return data.split(" ");
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new String[]{};
+		}
+	}
+	
+	
+	
+	// Parse command line
+	public String[] parseCmd(String cmdLine) {
+		return cmdLine.split(cmdLine);
+	}
 }
