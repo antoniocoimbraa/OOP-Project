@@ -87,7 +87,7 @@ class Card {
 				// True for cards "OL"
 				if(condRankCJOKER && condSuitCJOKER)
 					return true;
-				// True if card has no joker chars (e.g.) "F*" ou "*O" ou "FO"
+				// True if card has no joker chars (e.g.) "F*", "*O" or "FO"
 				if(!condRankBWJOKER && !condSuitBWJOKER)
 					if(!condRankCJOKER && !condRankCJOKER)
 						return true;
