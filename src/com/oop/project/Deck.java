@@ -1,10 +1,13 @@
 package com.oop.project;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -82,33 +85,13 @@ class Deck {
 		return removedCards.toString();
 	}
 	
-	
-	// Draws one card 
-	private Card draw() {
-		Iterator<Card> itr = deck.iterator();
-		Random random = new Random();
-		int randNum = random.nextInt(deck.size());
-		int i = 0;
+	public String shuffle() {
 		
-		for(i = 0; i < randNum; i++)
-			itr.next();
+		List<Card> cardList = new ArrayList<Card>(this.deck);
+		Collections.shuffle(cardList);
+		this.deck = new LinkedHashSet<Card>(cardList);
 		
-		return itr.next();
-	}
-	
-	// Draws and removes cards from the deck.
-	public Set<Card> drawRandomCards(int total) {
-		Set<Card> drawnCards = new HashSet<>();
-		Card card = null;
-		int i = 0;
-		
-		for(i = 0; i < total; i++) {
-			card = draw();
-			drawnCards.add(card);
-			deck.remove(card);
-		}
-		
-		return drawnCards;
+		return this.deck.toString();
 	}
 	
 	@Override
