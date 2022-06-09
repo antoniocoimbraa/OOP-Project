@@ -2,12 +2,21 @@ package com.oop.project;
 
 import java.util.Objects;
 
+
+/**
+ * 
+ * @author Group 45
+ *
+ */
+
 class Card {
 	
 	private final Rank rank;
 	private final Suit suit;
 	
 	// by convention: 3C (rank, suit)
+	// TODO: code for null case
+	// TODO: add throw exception
 	Card (String card) {
 		// by convention: rankSuit[0] = rank, rankSuit[1] = suit 
 		char[] rankSuit = card.toCharArray();
@@ -16,8 +25,6 @@ class Card {
 		this.suit = Suit.belong(rankSuit[1]);
 	}
 	
-	
-	
 	public Rank getRank() {
 		return rank;
 	}
@@ -25,8 +32,6 @@ class Card {
 	public Suit getSuit() {
 		return suit;
 	}
-	
-	
 	
 	@Override
 	public String toString() {
@@ -48,5 +53,43 @@ class Card {
 			return false;
 		Card other = (Card) obj;
 		return rank == other.rank && suit == other.suit;
+	}
+	
+	
+	
+	// Custom methods
+	
+	// Check if the card is valid
+	public boolean valid(String card) {
+		
+		char[] rankSuit = card.toCharArray();
+		
+		// Checks the string for length 2
+		boolean condLength = rankSuit.length == 2;
+		
+		// Checks if rank and suit are not null
+		boolean condRankNotNull = Rank.belong(rankSuit[0]) != null;
+		boolean condSuitNotNull = Suit.belong(rankSuit[1]) != null;
+		
+		// Checks for foul card (anything that has a joker) (e.g.): "FC", "OC or "FD"
+		boolean condRankBWJOKER = Rank.belong('F') == Rank.BWJOKER;
+		boolean condSuitBWJOKER = Suit.belong('O') == Suit.BWJOKER;
+		boolean condRankCJOKER = Rank.belong('O') == Rank.CJOKER;
+		boolean condSuitCJOKER = Suit.belong('L') == Suit.CJOKER;
+	
+		
+		if(condLength)
+			// Verdadeiro se a carta for "FO"
+			if(condRankBWJOKER && condSuitBWJOKER)
+				return true;
+			// Verdadeiro se a carta for "OL"
+			if(condRankCJOKER && condSuitCJOKER)
+				return true;
+			// Verdadeiro se a carta não contiver "F*" ou "*O" ou "FO"
+			if(!condRankBWJOKER && !condSuitBWJOKER)
+				if(!condRankCJOKER && !condRankCJOKER)
+					return true;
+			
+		return false;
 	}
 }
