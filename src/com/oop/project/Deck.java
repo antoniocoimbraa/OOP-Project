@@ -37,7 +37,7 @@ class Deck {
 		return deck;
 	}
 	
-	// Returns the total number of cards in the deck
+	// Returns deck size
 	public int size() {
 		return deck.size();
 	}
@@ -49,12 +49,10 @@ class Deck {
 				
 		for(String card:cards)
 			// Checks for a valid card
-			if(Card.valid(card)) {
-				deck.add(new Card(card));
-				addedCards.add(card);
-			}
-			else
-				System.out.println("deck.java:add: Invalid card!");
+			if(Card.valid(card))
+				// If deck doesn't have the card, it adds it
+				if(deck.add(new Card(card)))
+					addedCards.add(card);
 	
 		return addedCards.toString();
 	}
@@ -64,29 +62,26 @@ class Deck {
 		
 		LinkedList<String> matchedCards = new LinkedList<>();
 		
-		for(String card:cards) {
-			if(deck.contains(card))
-				matchedCards.add(card);
+		for(String card:cards)
+			if(Card.valid(card))
+				if(deck.contains(new Card(card)))
+					matchedCards.add(card);
 		
-			
 		return matchedCards.toString();
 	}
 	
 	
-	public Set<Card> removeCards(Card[] cards) {
-		// Removes cards from the deck. Return the cards added.
-		// TODO: change name from removeCards to remove
-		// TODO: change argument type from Card[] to String[]
+	public String remove(String[] cards) {
+
+		LinkedList<String> removedCards = new LinkedList<>();
 		
-		
-		Set<Card> removedCards = new HashSet<>();
-		
-		for(Card card:cards)
-			if(deck.remove(card))
+		for(String card:cards)
+			if(deck.remove(new Card(card)))
 				removedCards.add(card);
 		
-		return removedCards;
+		return removedCards.toString();
 	}
+	
 	
 	// Draws one card 
 	private Card draw() {
