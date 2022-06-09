@@ -60,7 +60,7 @@ class Card {
 	// Custom methods
 	
 	// Check if the card is valid
-	public boolean valid(String card) {
+	public static boolean valid(String card) {
 		
 		char[] rankSuit = card.toCharArray();
 		
@@ -68,19 +68,19 @@ class Card {
 		boolean condLength = rankSuit.length == 2;
 		
 		// Checks if rank and suit are not null
-		boolean condRankNotNull = Rank.belong(rankSuit[0]) != null;
-		boolean condSuitNotNull = Suit.belong(rankSuit[1]) != null;
+		boolean condRankNull = Rank.belong(rankSuit[0]) == null;
+		boolean condSuitNull = Suit.belong(rankSuit[1]) == null;
 		
 		// Checks for foul card (anything that has a joker) (e.g.): "FC", "OC or "FD"
-		boolean condRankBWJOKER = Rank.belong('F') == Rank.BWJOKER;
-		boolean condSuitBWJOKER = Suit.belong('O') == Suit.BWJOKER;
-		boolean condRankCJOKER = Rank.belong('O') == Rank.CJOKER;
-		boolean condSuitCJOKER = Suit.belong('L') == Suit.CJOKER;
+		boolean condRankBWJOKER = Rank.belong(rankSuit[0]) == Rank.BWJOKER;
+		boolean condSuitBWJOKER = Suit.belong(rankSuit[1]) == Suit.BWJOKER;
+		boolean condRankCJOKER = Rank.belong(rankSuit[0]) == Rank.CJOKER;
+		boolean condSuitCJOKER = Suit.belong(rankSuit[1]) == Suit.CJOKER;
 	
 		
 		if(condLength)
 			// Checks for valid chars for cards 
-			if(!condRankNotNull && !condSuitNotNull)
+			if(!condRankNull && !condSuitNull) {
 				// True for cards "FO"
 				if(condRankBWJOKER && condSuitBWJOKER)
 					return true;
@@ -91,6 +91,7 @@ class Card {
 				if(!condRankBWJOKER && !condSuitBWJOKER)
 					if(!condRankCJOKER && !condRankCJOKER)
 						return true;
+			}
 			
 		return false;
 	}

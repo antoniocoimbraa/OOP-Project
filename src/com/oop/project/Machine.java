@@ -4,18 +4,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+
+// TODO: create method to print commands
+// TODO: create method to print results
+
+
+
 public class Machine {
 	
-	// Stores the name of the card-file.txt file. It can be different from 'card-file.txt'.
+	// Stores the name of the file that contains the cards for debug mode
 	private String cardFileName;
 
-	// Stores a pointer to cmd-file.txt file. It can be different from 'cmd-file.txt'.
+	// Stores the name the file that contains the commands for debug mode
 	private String cmdFileName;
 	
-	// 
+	// TODO: change cmdList type from String[] to fifo set type
+	// Stores the list of commands
 	private String[] cmdList;
 	
-	//
+	// TODO: change cardList type from String[] to fifo set type
 	private String[] cardList;
 	
 	// Store the total amount of credits available to the player.
@@ -31,52 +38,47 @@ public class Machine {
 	// CONSTRUCTOR
 	// TODO: code for simulation mode
 	Machine(String[] cmmdLine) {
-	
 		char mode = cmmdLine[0].toCharArray()[1];
 		
 		switch(mode) {
-		case 'd':
-			this.cardFileName = cmmdLine[2];
-			this.cmdFileName = cmmdLine[3];
-			this.cardList = parseFile(cmmdLine[2]);
-			this.cmdList = parseFile(cmmdLine[3]);
-			this.credit = (int) Integer.parseInt(cmmdLine[1]);
-			this.deck = new Deck();
-			this.mode = cmmdLine[0].toCharArray()[1];
-			break;
-		case 's':
-			break;
+			// Case for (d)ebug mode
+			case 'd':
+				this.cardFileName = cmmdLine[2];
+				this.cmdFileName = cmmdLine[3];
+				this.cardList = parseFile(cmmdLine[2]);
+				this.cmdList = parseFile(cmmdLine[3]);
+				this.credit = (int) Integer.parseInt(cmmdLine[1]);
+				this.deck = new Deck();
+				this.mode = cmmdLine[0].toCharArray()[1];
+				break;
+			// Case for (s)imulation mode
+			case 's':
+				break;
 			default:
 				System.out.println("Machine constructor failed!");
+				break;
 		}
-		
-
 	}
 	
-	
-	// CONSTRUCTOR for debug mode
-	Machine(int credit, String cardFileName, String cmdFileName) {
-		this.cardFileName = cardFileName;
-		this.cmdFileName = cmdFileName;
-		this.cardList = parseFile(cardFileName);
-		this.cmdList = parseFile(cmdFileName);
-		this.credit = credit;
-		this.deck = new Deck();
-		this.mode = 'd';
-	}
-	
-	
-	
-	// DEFAULT GETTER AND SETTER
-	
+	// GETTERS AND SETTER METHODS
+	/**
+	 * 
+	 * @return
+	 */
 	public int getCredits() {
 		return credit;
 	}	
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getFileCard() {
 		return cardFileName;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String getFileCmd() {
 		return cmdFileName;
 	}
@@ -111,9 +113,11 @@ public class Machine {
 	
 	
 	
-	// METHODS
+	// CUSTOM METHODS
+	// TODO: Create a welcome method upon machine constructor call
+	// TODO: Create a shuffle method to shuffle deck of cards
 	
-	// ParseFile
+	
 	public String[] parseFile(String cmdFileName) {
 		
 		File fp = new File(cmdFileName);
@@ -137,9 +141,10 @@ public class Machine {
 	}
 	
 	
-	
 	// Parse command line
 	public String[] parseCmd(String cmdLine) {
 		return cmdLine.split(cmdLine);
 	}
+	
+	// m
 }

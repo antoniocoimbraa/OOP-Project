@@ -14,6 +14,7 @@ enum Suit {
 	
 
 	
+	// CONSTRUCTOR
 	Suit(char suit) {
 		this.suit = suit;
 	}

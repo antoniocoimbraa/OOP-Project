@@ -16,6 +16,7 @@ enum Rank {
 	
 	
 	
+	// CONSTRUCTOR
 	Rank(char rank){
 		this.rank = rank;
 	}
