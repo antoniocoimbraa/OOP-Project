@@ -79,16 +79,18 @@ class Card {
 	
 		
 		if(condLength)
-			// Verdadeiro se a carta for "FO"
-			if(condRankBWJOKER && condSuitBWJOKER)
-				return true;
-			// Verdadeiro se a carta for "OL"
-			if(condRankCJOKER && condSuitCJOKER)
-				return true;
-			// Verdadeiro se a carta não contiver "F*" ou "*O" ou "FO"
-			if(!condRankBWJOKER && !condSuitBWJOKER)
-				if(!condRankCJOKER && !condRankCJOKER)
+			// Checks for valid chars for cards 
+			if(!condRankNotNull && !condSuitNotNull)
+				// Verdadeiro se a carta for "FO"
+				if(condRankBWJOKER && condSuitBWJOKER)
 					return true;
+				// Verdadeiro se a carta for "OL"
+				if(condRankCJOKER && condSuitCJOKER)
+					return true;
+				// Verdadeiro se a carta não contiver "F*" ou "*O" ou "FO"
+				if(!condRankBWJOKER && !condSuitBWJOKER)
+					if(!condRankCJOKER && !condRankCJOKER)
+						return true;
 			
 		return false;
 	}
