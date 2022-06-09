@@ -4,10 +4,11 @@ package com.oop.project;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
-
+// TODO: can we make DECK an interface?
 class Deck {
 	
 	
@@ -41,54 +42,34 @@ class Deck {
 		return deck.size();
 	}
 	
-	
-	/**
-	 * Clas: Deck.java
-	 * Method: addCards
-	 * input : String[] (e.g.): "3H", {"2H","KH","2S"} or ""
-	 * output: 
-	 * 
-	 * Description: 
-	 * 
-	 */
-	
-	// Description: Returns the added cards
-	// Input: 
-	// TODO: change method name from 'addCards' to 'add'
-	// TODO: change input argument from Card[] to String[]
-	// TODO: change output argument from Set<Card> to String[]
-	public Set<Card> add(String[] cards) {
+	// TODO: throw exception for add cards when card is not valid
+	public String add(String[] cards) {
 		
-		LinkedHashSet<Card> addedCards = new LinkedHashSet<>();
-		Card aux = null;
-		
-		
-		for(String card:cards) {
-			// Assuming cards are right
-			aux = new Card(card);
-			
-			
-		}
-			if(card)
-			deck.add(new Card(card));
-			if(deck.add(card))
+		LinkedList<String> addedCards = new LinkedList<>();
+				
+		for(String card:cards)
+			// Checks for a valid card
+			if(Card.valid(card)) {
+				deck.add(new Card(card));
 				addedCards.add(card);
+			}
+			else
+				System.out.println("deck.java:add: Invalid card!");
 	
-		return addedCards;
+		return addedCards.toString();
 	}
 	
 	// Check if the deck has a card
-	public Set<Card> hasCards(Card[] cards) {
-		// TODO: change method name from haCards to has()
-		// TODO: change argument type from Card[] to String[]
-		Set<Card> hasCards = new HashSet<>();
+	public String has(String[] cards) {
 		
-		for(Card card:cards) {
+		LinkedList<String> matchedCards = new LinkedList<>();
+		
+		for(String card:cards) {
 			if(deck.contains(card))
-				hasCards.add(card);
-		}
+				matchedCards.add(card);
 		
-		return hasCards;
+			
+		return matchedCards.toString();
 	}
 	
 	
