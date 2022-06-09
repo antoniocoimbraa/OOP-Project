@@ -3,17 +3,21 @@ package com.oop.project;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
 
 class Deck {
 	
-	// It stores the current deck?
-	private Set<Card> deck;
 	
+	// It stores the current deck
+	private LinkedHashSet<Card> deck;
+	
+	
+	// TODO: 
 	Deck() {
-		deck = new HashSet<>();
+		deck = new LinkedHashSet<>();
 		
 		// Adds all cards aside from jokers
 		for(Rank rank: Rank.values())
@@ -23,8 +27,8 @@ class Deck {
 						deck.add(new Card(rank.toString()+suit.toString()));
 		
 		// Adds two jokers (fool) to the deck.
-		deck.add(new Card("FO"));
-		deck.add(new Card("OL"));
+		deck.add(new Card("FO")); // black and white joker
+		deck.add(new Card("OL")); // colored joker
 	}
 	
 	// Getter
@@ -33,15 +37,40 @@ class Deck {
 	}
 	
 	// Returns the total number of cards in the deck
-	public int countCards() {
+	public int size() {
 		return deck.size();
 	}
 	
-	// Returns the added cards
-	public Set<Card> addCards(Card[] cards) {
-		Set<Card> addedCards = new HashSet<>();
+	
+	/**
+	 * Clas: Deck.java
+	 * Method: addCards
+	 * input : String[] (e.g.): "3H", {"2H","KH","2S"} or ""
+	 * output: 
+	 * 
+	 * Description: 
+	 * 
+	 */
+	
+	// Description: Returns the added cards
+	// Input: 
+	// TODO: change method name from 'addCards' to 'add'
+	// TODO: change input argument from Card[] to String[]
+	// TODO: change output argument from Set<Card> to String[]
+	public Set<Card> add(String[] cards) {
 		
-		for(Card card:cards)
+		LinkedHashSet<Card> addedCards = new LinkedHashSet<>();
+		Card aux = null;
+		
+		
+		for(String card:cards) {
+			// Assuming cards are right
+			aux = new Card(card);
+			
+			
+		}
+			if(card)
+			deck.add(new Card(card));
 			if(deck.add(card))
 				addedCards.add(card);
 	
@@ -50,6 +79,8 @@ class Deck {
 	
 	// Check if the deck has a card
 	public Set<Card> hasCards(Card[] cards) {
+		// TODO: change method name from haCards to has()
+		// TODO: change argument type from Card[] to String[]
 		Set<Card> hasCards = new HashSet<>();
 		
 		for(Card card:cards) {
@@ -60,8 +91,13 @@ class Deck {
 		return hasCards;
 	}
 	
-	// Removes cards from the deck. Return the cards added.
+	
 	public Set<Card> removeCards(Card[] cards) {
+		// Removes cards from the deck. Return the cards added.
+		// TODO: change name from removeCards to remove
+		// TODO: change argument type from Card[] to String[]
+		
+		
 		Set<Card> removedCards = new HashSet<>();
 		
 		for(Card card:cards)
