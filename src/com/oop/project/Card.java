@@ -81,13 +81,13 @@ class Card {
 		if(condLength)
 			// Checks for valid chars for cards 
 			if(!condRankNotNull && !condSuitNotNull)
-				// Verdadeiro se a carta for "FO"
+				// True for cards "FO"
 				if(condRankBWJOKER && condSuitBWJOKER)
 					return true;
-				// Verdadeiro se a carta for "OL"
+				// True for cards "OL"
 				if(condRankCJOKER && condSuitCJOKER)
 					return true;
-				// Verdadeiro se a carta não contiver "F*" ou "*O" ou "FO"
+				// True if card has no joker chars (e.g.) "F*" ou "*O" ou "FO"
 				if(!condRankBWJOKER && !condSuitBWJOKER)
 					if(!condRankCJOKER && !condRankCJOKER)
 						return true;
