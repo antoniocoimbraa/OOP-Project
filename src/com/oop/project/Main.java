@@ -10,6 +10,14 @@ public class Main {
 		// Machine 
 		Machine machine = new Machine(new Deck());
 		
+		machine.setFileCmd("card-file.txt");
+		machine.setFileCard("cmd-file.txt");
+		System.out.println(machine.getCredits());
+		System.out.println(machine.getCardFileName());
+		System.out.println(machine.getCmdFileName());
+		System.out.println(machine.parseCmd("cmd-file.txt"));
+		
+		
 		// Starts a deck with 54 (2 jokers included)
 		Deck deck = new Deck();
 		
@@ -109,21 +117,14 @@ public class Main {
 		// Removes old deck and starts a new deck
 		System.out.println(machine.newDeck());
 		System.out.println(machine.count());
-		System.out.println(machine.drawCard(1));
+		
+		// Draws one card from
+		System.out.println(machine.draw(1));
 		System.out.println(machine.count());
 		System.out.println(machine.deck());
-		System.out.println(machine.shuffleDeck());
-		System.out.println(machine.drawCard(5));
+		System.out.println(machine.shuffle());
+		System.out.println(machine.draw(5));
 		System.out.println(machine.count());
-		
-		/*
-		// Draws a card and shows current deck
-		System.out.println(machine.drawCard(1));
-		System.out.println(machine.count());
-		
-		// Draws a hand of five cards (best be shuffled)
-		System.out.println(machine.newDeck());
-		System.out.println(machine.drawCard(5));
-		*/
+
 	}
 }

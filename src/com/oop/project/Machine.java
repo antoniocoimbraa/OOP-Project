@@ -9,10 +9,10 @@ import java.util.Scanner;
 public class Machine {
 	
 	// Stores the name of the file that contains the cards for debug mode
-	private String cardFileName;
+	private String cardFile;
 
 	// Stores the name the file that contains the commands for debug mode
-	private String cmdFileName;
+	private String cmdFile;
 	
 	// TODO: change cmdList type from String[] to fifo set type
 	// Stores the list of commands
@@ -62,16 +62,24 @@ public class Machine {
 	}
 	
 	// GETTERS AND SETTER METHODS
+	public String getCardFileName() {
+		return cardFileName;
+	}
+	
+	public String getCmdFileName() {
+		return cmdFileName;
+	}
+	
 	public int getCredits() {
 		return credit;
 	}	
 
-	public String getFileCard() {
-		return cardFileName;
+	public String getCmdList() {
+		return cmdList.toString();
 	}
 
-	public String getFileCmd() {
-		return cmdFileName;
+	public String getCardList() {
+		return cardList.toString();
 	}
 	
 	public Deck getDeck() {
@@ -82,27 +90,26 @@ public class Machine {
 		return mode;
 	}
 	
-	public void setCredits(int credits) {
-		this.credit = credits;
-	}
-	
 	public void setFileCard(String cardFileName) {
 		this.cardFileName = cardFileName;
 	}
 	
 	public void setFileCmd(String cmdFileName) {
-		this.cardFileName = cmdFileName;
-	}
-	
-	public void setDeck(Deck deck) {
-		this.deck = deck;
+		this.cmdFileName = cmdFileName;
 	}
 
-	public void setMode(char mode) {
-		this.mode = mode;
+	@Override
+	public String toString() {
+		String cardFile = "card file: " + this.cardFile + "\n";
+		String cmdFile = "cmd file: " + this.cmdFile + "\n";
+		String card = "cards: " + this.cardList + "\n";
+		String cmd = "cmd: " + this.cmdList + "\n";
+		String credit = "credit(s): " + this.credit + "\n";
+		String deck = "deck:\n" + this.deck;
+		String mode = "mode: " + this.mode + "\n";
+		
+		return cardFile+cmdFile+card+cmd+credit+deck+mode;
 	}
-	
-	
 	
 	// CUSTOM METHODS
 	// TODO: Create a welcome method upon machine constructor call
@@ -131,6 +138,7 @@ public class Machine {
 	
 	// Parse command line
 	public String[] parseCmd(String cmdLine) {
+		System.out.println(cmdLine.split(cmdLine));
 		return cmdLine.split(cmdLine);
 	}
 	
@@ -144,20 +152,22 @@ public class Machine {
 		return this.deck.toString();
 	}
 	
-	// 
-	public String drawCard(int numberOfDraws) {
+	// Draw cards
+	public String draw(int numberOfDraws) {
 		return deck.draw(numberOfDraws);
 	}
 	
-	// 
+	// New deck
 	public String newDeck() {
 		this.deck = new Deck();
 		return this.deck.toString();
 	}
 	
-	// 
-	public String shuffleDeck() {
+	// shuffles deck
+	public String shuffle() {
 		this.deck.shuffle();
 		return this.deck.toString();
 	}
+	
+	
 }
