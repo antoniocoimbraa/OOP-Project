@@ -13,6 +13,7 @@ import java.util.Set;
 class Deck {
 	
 	
+	
 	// It stores the current deck
 	private LinkedHashSet<Card> deck;
 	
@@ -46,41 +47,37 @@ class Deck {
 	
 	// TODO: throw exception for add cards when card is not valid
 	public String add(String[] cards) {
-		
 		LinkedHashSet<String> addedCards = new LinkedHashSet<>();
 				
 		for(String card:cards)
 			// Checks for a valid card
 			if(Card.valid(card))
 				// If deck doesn't have the card, it adds it
-				if(deck.add(new Card(card)))
+				if(this.deck.add(new Card(card)))
 					addedCards.add(card);
 	
 		return addedCards.toString();
 	}
 	
 	// Draws a total number of cards from the deck
+	// TODO: check draw method
 	public String draw(int totalOfDraws) {
 		
-		LinkedList<Card> drawnCards = new LinkedList<>();
-		LinkedHashSet<Card> newDeck = this.deck;
+		LinkedHashSet<Card> drawnCards = new LinkedHashSet<>();
+		Iterator<Card> itr = this.deck.iterator();
+		int i = 0;
 		
-		newDeck.remove(new Card("AC"));
+		for(i = 0; i < totalOfDraws && itr.hasNext(); i++) {
+			drawnCards.add(itr.next());
+		}
 		
-		System.out.println("Changed decks");
-		System.out.println(this.deck.size());
-		System.out.println(this.deck.toString());
-		System.out.println(newDeck.size());
-		System.out.println(newDeck.toString());
-		
-		System.out.println();
+		this.deck.removeAll(drawnCards);
 		
 		return drawnCards.toString();
 	}
 	
 	// Check if the deck has a card
 	public String has(String[] cards) {
-		
 		LinkedList<String> matchedCards = new LinkedList<>();
 		
 		for(String card:cards)
@@ -91,9 +88,8 @@ class Deck {
 		return matchedCards.toString();
 	}
 	
-	
+	// Deck remove
 	public String remove(String[] cards) {
-
 		LinkedList<String> removedCards = new LinkedList<>();
 		
 		for(String card:cards)
