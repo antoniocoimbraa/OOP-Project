@@ -100,5 +100,12 @@ public class Main {
 		// Shuffles internal deck
 		System.out.println(machine.shuffleDeck());
 		
+		// Display deck
+		System.out.println(machine.deck());
+		
+		// Removes old deck and starts a new deck
+		System.out.println(machine.newDeck());
+		
+		
 	}
 }

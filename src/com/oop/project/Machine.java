@@ -134,13 +134,18 @@ public class Machine {
 		return cmdLine.split(cmdLine);
 	}
 	
+	// Displays the deck
+	public String deck() {
+		return this.deck.toString();
+	}
 	
 	public String drawCard(int numberOfDraws) {
 		return deck.draw(numberOfDraws);
 	}
 	
-	public void newDeck() {
+	public String newDeck() {
 		this.deck = new Deck();
+		return this.deck.toString();
 	}
 	
 	public String shuffleDeck() {
@@ -151,6 +156,4 @@ public class Machine {
 
 		return shuffledDeck.toString();
 	}
-	
-
 }
