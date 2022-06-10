@@ -31,6 +31,7 @@ public class Machine {
 	private char mode;
 	
 	
+	// Constructor
 	Machine(Deck deck) {
 		this.deck = deck;
 	}
@@ -128,7 +129,6 @@ public class Machine {
 		}
 	}
 	
-	
 	// Parse command line
 	public String[] parseCmd(String cmdLine) {
 		return cmdLine.split(cmdLine);
@@ -144,21 +144,20 @@ public class Machine {
 		return this.deck.toString();
 	}
 	
+	// 
 	public String drawCard(int numberOfDraws) {
 		return deck.draw(numberOfDraws);
 	}
 	
+	// 
 	public String newDeck() {
 		this.deck = new Deck();
 		return this.deck.toString();
 	}
 	
+	// 
 	public String shuffleDeck() {
-		Deck shuffledDeck = this.deck;
-		
-		shuffledDeck.shuffle();
-		this.deck = shuffledDeck;
-
-		return shuffledDeck.toString();
+		this.deck.shuffle();
+		return this.deck.toString();
 	}
 }

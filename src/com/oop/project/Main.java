@@ -98,6 +98,9 @@ public class Main {
 		
 		
 		// Shuffles internal deck
+		System.out.println("New deck");
+		System.out.println(machine.newDeck());
+		System.out.println("Shuffled deck");
 		System.out.println(machine.shuffleDeck());
 		
 		// Display deck
@@ -108,7 +111,11 @@ public class Main {
 		
 		// Draws a card and shows current deck
 		System.out.println(machine.drawCard(1));
-		System.out.println(machine.deck());
+		System.out.println(machine.count());
+		
+		// Draws a hand of five cards (best be shuffled)
+		System.out.println(machine.newDeck());
+		System.out.println(machine.drawCard(5));
 		
 	}
 }

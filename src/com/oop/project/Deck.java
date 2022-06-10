@@ -63,14 +63,17 @@ class Deck {
 	public String draw(int totalOfDraws) {
 		
 		LinkedList<Card> drawnCards = new LinkedList<>();
-		Iterator<Card> itr = deck.iterator();
-		int i = 0;
+		LinkedHashSet<Card> newDeck = this.deck;
 		
-		for(i = 0; i < totalOfDraws && itr.hasNext(); ++i) {
-			Card card = itr.next();
-			deck.remove(card);
-			drawnCards.add(card);
-		}
+		newDeck.remove(new Card("AC"));
+		
+		System.out.println("Changed decks");
+		System.out.println(this.deck.size());
+		System.out.println(this.deck.toString());
+		System.out.println(newDeck.size());
+		System.out.println(newDeck.toString());
+		
+		System.out.println();
 		
 		return drawnCards.toString();
 	}
@@ -100,8 +103,8 @@ class Deck {
 		return removedCards.toString();
 	}
 	
+	// Shuffles the deck
 	public String shuffle() {
-		
 		List<Card> cardList = new ArrayList<Card>(this.deck);
 		Collections.shuffle(cardList);
 		this.deck = new LinkedHashSet<Card>(cardList);
