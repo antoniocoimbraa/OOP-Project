@@ -66,8 +66,11 @@ class Deck {
 		Iterator<Card> itr = deck.iterator();
 		int i = 0;
 		
-		for(i = 0; i < totalOfDraws && itr.hasNext(); ++i)
-			drawnCards.add(itr.next());
+		for(i = 0; i < totalOfDraws && itr.hasNext(); ++i) {
+			Card card = itr.next();
+			deck.remove(card);
+			drawnCards.add(card);
+		}
 		
 		return drawnCards.toString();
 	}
