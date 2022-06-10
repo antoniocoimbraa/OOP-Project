@@ -106,6 +106,9 @@ public class Main {
 		// Removes old deck and starts a new deck
 		System.out.println(machine.newDeck());
 		
+		// Draws a card and shows current deck
+		System.out.println(machine.drawCard(1));
+		System.out.println(machine.deck());
 		
 	}
 }

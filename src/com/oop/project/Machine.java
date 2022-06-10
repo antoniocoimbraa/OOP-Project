@@ -134,6 +134,11 @@ public class Machine {
 		return cmdLine.split(cmdLine);
 	}
 	
+	// Counts the total cards of a deck
+	public String count() {
+		return String.valueOf(deck.size());
+	}
+	
 	// Displays the deck
 	public String deck() {
 		return this.deck.toString();
