@@ -108,7 +108,15 @@ public class Main {
 		
 		// Removes old deck and starts a new deck
 		System.out.println(machine.newDeck());
+		System.out.println(machine.count());
+		System.out.println(machine.drawCard(1));
+		System.out.println(machine.count());
+		System.out.println(machine.deck());
+		System.out.println(machine.shuffleDeck());
+		System.out.println(machine.drawCard(5));
+		System.out.println(machine.count());
 		
+		/*
 		// Draws a card and shows current deck
 		System.out.println(machine.drawCard(1));
 		System.out.println(machine.count());
@@ -116,6 +124,6 @@ public class Main {
 		// Draws a hand of five cards (best be shuffled)
 		System.out.println(machine.newDeck());
 		System.out.println(machine.drawCard(5));
-		
+		*/
 	}
 }

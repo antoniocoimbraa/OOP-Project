@@ -67,9 +67,8 @@ class Deck {
 		Iterator<Card> itr = this.deck.iterator();
 		int i = 0;
 		
-		for(i = 0; i < totalOfDraws && itr.hasNext(); i++) {
+		for(i = 0; i < totalOfDraws && itr.hasNext(); i++)
 			drawnCards.add(itr.next());
-		}
 		
 		this.deck.removeAll(drawnCards);
 		
