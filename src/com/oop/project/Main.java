@@ -1,16 +1,14 @@
 package com.oop.project;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.LinkedList;
-import java.util.Scanner;
-
 
 
 //TODO: CHANGE PROJECT AUTHORS
 public class Main {
 
 	public static void main(String[] args) {
+		
+		// Machine 
+		Machine machine = new Machine(new Deck());
 		
 		// Starts a deck with 54 (2 jokers included)
 		Deck deck = new Deck();
@@ -97,6 +95,10 @@ public class Main {
 		System.out.println("Deck after added joker and third shuffle (" + deck.size() + ")");
 		System.out.println(deck.shuffle());
 		System.out.println(deck.size());
+		
+		
+		// Shuffles internal deck
+		System.out.println(machine.shuffleDeck());
 		
 	}
 }

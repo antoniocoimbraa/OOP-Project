@@ -3,12 +3,10 @@ package com.oop.project;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 // TODO: can we make DECK an interface?
@@ -17,6 +15,7 @@ class Deck {
 	
 	// It stores the current deck
 	private LinkedHashSet<Card> deck;
+	
 	
 	
 	// TODO: 
@@ -48,7 +47,7 @@ class Deck {
 	// TODO: throw exception for add cards when card is not valid
 	public String add(String[] cards) {
 		
-		LinkedList<String> addedCards = new LinkedList<>();
+		LinkedHashSet<String> addedCards = new LinkedHashSet<>();
 				
 		for(String card:cards)
 			// Checks for a valid card
@@ -58,6 +57,19 @@ class Deck {
 					addedCards.add(card);
 	
 		return addedCards.toString();
+	}
+	
+	// Draws a total number of cards from the deck
+	public String draw(int totalOfDraws) {
+		
+		LinkedList<Card> drawnCards = new LinkedList<>();
+		Iterator<Card> itr = deck.iterator();
+		int i = 0;
+		
+		for(i = 0; i < totalOfDraws && itr.hasNext(); ++i)
+			drawnCards.add(itr.next());
+		
+		return drawnCards.toString();
 	}
 	
 	// Check if the deck has a card

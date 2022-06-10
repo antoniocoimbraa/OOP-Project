@@ -4,12 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-
 // TODO: create method to print commands
 // TODO: create method to print results
-
-
-
 public class Machine {
 	
 	// Stores the name of the file that contains the cards for debug mode
@@ -34,6 +30,10 @@ public class Machine {
 	// Stores game mode type. (d)debug mode or (s)simulation mode.
 	private char mode;
 	
+	
+	Machine(Deck deck) {
+		this.deck = deck;
+	}
 	
 	// CONSTRUCTOR
 	// TODO: code for simulation mode
@@ -61,24 +61,14 @@ public class Machine {
 	}
 	
 	// GETTERS AND SETTER METHODS
-	/**
-	 * 
-	 * @return
-	 */
 	public int getCredits() {
 		return credit;
 	}	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public String getFileCard() {
 		return cardFileName;
 	}
-	/**
-	 * 
-	 * @return
-	 */
+
 	public String getFileCmd() {
 		return cmdFileName;
 	}
@@ -116,8 +106,6 @@ public class Machine {
 	// CUSTOM METHODS
 	// TODO: Create a welcome method upon machine constructor call
 	// TODO: Create a shuffle method to shuffle deck of cards
-	
-	
 	public String[] parseFile(String cmdFileName) {
 		
 		File fp = new File(cmdFileName);
@@ -146,5 +134,23 @@ public class Machine {
 		return cmdLine.split(cmdLine);
 	}
 	
-	// m
+	
+	public String drawCard(int numberOfDraws) {
+		return deck.draw(numberOfDraws);
+	}
+	
+	public void newDeck() {
+		this.deck = new Deck();
+	}
+	
+	public String shuffleDeck() {
+		Deck shuffledDeck = this.deck;
+		
+		shuffledDeck.shuffle();
+		this.deck = shuffledDeck;
+
+		return shuffledDeck.toString();
+	}
+	
+
 }

@@ -12,7 +12,7 @@ enum Suit {
 	
 	private final char suit;
 	
-
+	
 	
 	// CONSTRUCTOR
 	Suit(char suit) {

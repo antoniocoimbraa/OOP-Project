@@ -2,13 +2,6 @@ package com.oop.project;
 
 import java.util.Objects;
 
-
-/**
- * 
- * @author Group 45
- *
- */
-
 class Card {
 	
 	private final Rank rank;
