@@ -30,8 +30,7 @@ public class Machine {
 	// Stores list of cards
 	private Deque<Card> deck = new LinkedList<>();
 	
-	// Stores current hand
-	private Deque<Card> hand = new LinkedList<>();
+	private final PokerHand hand = new PokerHand();
 	
 	// Stores game mode type. (d)debug mode or (s)simulation mode.
 	private char mode;
@@ -169,13 +168,15 @@ public class Machine {
 	}
 	
 	private void Deal() {
-		hand = new ArrayDeque<>(drawCard(5));
+		int i = 0;
+		
 		if(deck.size() > 6) {
+			for(Card card:drawCard(5)) {
+				i++;
+				hand.set(i, card);
+			}
 			System.out.println("-cmd d" );
-			System.out.print("Player's hand");
-			for(Card card:hand)
-				System.out.print(" " + card);
-			System.out.println("");
+			System.out.println("Player's hand " + hand);
 			System.out.println("");
 		}
 		else 
@@ -183,22 +184,16 @@ public class Machine {
 	}
 	
 	private void Hold() {
-		List<Card> hand = new LinkedList<>(this.hand);
-		
 		if(deck.size() > 1) {
 			try {
 				int hold1 = Integer.valueOf(feed.removeFirst());
 				int hold2 = Integer.valueOf(feed.removeFirst());
 				
 				if(hold1 > 0 && hold1 < 6 && hold2 > 0 && hold2 < 6) {
-					hand.set(hold1 - 1, deck.removeFirst());
-					hand.set(hold2 - 1, deck.removeFirst());
-					
+					hand.set(hold1, deck.removeFirst());
+					hand.set(hold2, deck.removeFirst());
 					System.out.println("-cmd h " + hold1 + " " + hold2);
-					System.out.print("Player's hand");
-					for(Card card:hand)
-						System.out.print(" " + card);
-					System.out.println();
+					System.out.println("Player's hand " + hand);
 					System.out.println();
 				}
 				else {

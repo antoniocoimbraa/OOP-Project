@@ -17,9 +17,13 @@ class Card implements Comparable<Card> {
         this.suit = suit;
 	}
 	
+	
+	
 	@Override
     public int compareTo(Card c) {
-		return rank.compareTo(c.rank);
+		int suitCompare = suit.compareTo(c.suit);
+        return (suitCompare != 0 ? 
+        		suitCompare : rank.compareTo(c.rank));
     }
 
 	@Override
@@ -43,12 +47,18 @@ class Card implements Comparable<Card> {
 		return false;
 	}
 	
+	public boolean isPair(Card card) {
+		if(card.compareTo(card) == 0)
+			return true;
+		return false;
+	}
+	
 	public boolean isSuit(Card card) {
 		if(suit.compareTo(card.suit) == 0)
 			return true;
 		return false;
 	}
-		
+	
 	public static Deque<Card> newDeck() {
 		return new ArrayDeque<Card>(deck);
 	}

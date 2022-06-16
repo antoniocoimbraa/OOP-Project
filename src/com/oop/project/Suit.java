@@ -23,7 +23,7 @@ enum Suit {
 		
 	static {
 		map = new HashMap<String,Suit>();
-		
+	
 		for(Suit s:Suit.values())
 			try {
 				map.put(s.getSuit(),s);

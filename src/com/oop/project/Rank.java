@@ -10,7 +10,7 @@ enum Rank {
 	BWJOKER("F"),
 	// Colored joker (foOl)
 	CJOKER("O");
-
+	
 	private final String rank;
 	private static final HashMap<String,Rank> map;
 	
@@ -24,7 +24,7 @@ enum Rank {
 		
 	static {
 		map = new HashMap<String,Rank>();
-		
+	
 		for(Rank r:Rank.values())
 			try {
 				map.put(r.getRank(),r);
