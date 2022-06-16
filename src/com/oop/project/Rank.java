@@ -3,17 +3,13 @@ package com.oop.project;
 import java.util.HashMap;
 
 enum Rank {
-	// 13 ranks + 2 jokers
-	ACE("A"), TWO("2"), THREE("3"), FOUR("4"), FIVE("5"), SIX("6"), SEVEN("7"),
-	EIGHT("8"), NINE("9"), TEN("T"), JACK("J"), QUEEN("Q"), KING("K"),
-	// Black and white joker (Fool)
-	BWJOKER("F"),
-	// Colored joker (foOl)
-	CJOKER("O");
+	TWO("2"), THREE("3"), FOUR("4"), FIVE("5"), SIX("6"), SEVEN("7"), EIGHT("8"),
+	NINE("9"), TEN("T"), JACK("J"), QUEEN("Q"), KING("K"), ACE("A");
+	
 	
 	private final String rank;
 	private static final HashMap<String,Rank> map;
-	
+
 	Rank(String rank) {
 		this.rank = rank;
 	}

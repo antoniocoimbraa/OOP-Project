@@ -10,6 +10,10 @@ class Card implements Comparable<Card> {
 	
 	private static final Deque<Card> deck = new ArrayDeque<Card>();
 	
+	Card() {
+		
+	}
+	
 	Card (Rank rank, Suit suit) {
         if (rank == null || suit == null)
             throw new NullPointerException(rank + ", " + suit);
@@ -17,13 +21,17 @@ class Card implements Comparable<Card> {
         this.suit = suit;
 	}
 	
-	
+	public Rank getRank() {
+		return rank;
+	}
+
+	public Suit getSuit() {
+		return suit;
+	}
 	
 	@Override
     public int compareTo(Card c) {
-		int suitCompare = suit.compareTo(c.suit);
-        return (suitCompare != 0 ? 
-        		suitCompare : rank.compareTo(c.rank));
+		return rank.compareTo(c.rank);
     }
 
 	@Override
@@ -34,16 +42,22 @@ class Card implements Comparable<Card> {
 	static {
 		for(Suit suit: Suit.values())
 			for(Rank rank: Rank.values())
-				if(!rank.equals(Rank.BWJOKER) && !rank.equals(Rank.CJOKER))
-					if(!suit.equals(Suit.BWJOKER) && !suit.equals(Suit.CJOKER))
-						deck.addLast(new Card(rank,suit));
+				deck.addLast(new Card(rank,suit));
 	}
 	
 	public boolean isNeighbour(Card card) {
+		
+		
 		if(card.rank.ordinal() + 1 == rank.ordinal())
 			return true;
-		if(card.rank.ordinal() == rank.ordinal())
+		if(card.rank.ordinal() == rank.ordinal() + 1)
 			return true;
+		
+		// Check for low ace
+		if(card.rank == Rank.ACE)
+			if(rank == Rank.TWO)
+				return true;
+		
 		return false;
 	}
 	

@@ -3,12 +3,7 @@ package com.oop.project;
 import java.util.HashMap;
 
 enum Suit {
-	// 4 suits + 2 jokers
-	CLUBS("C"), DIAMONDS("D"), HEARTS("H"), SPADES("S"),
-	// Black and white joker (fOol)
-	BWJOKER("O"),
-	// Colored joker (fooL)
-	CJOKER("L");
+	CLUBS("C"), DIAMONDS("D"), HEARTS("H"), SPADES("S");
 	
 	private final String suit;
 	private static final HashMap<String,Suit> map;
