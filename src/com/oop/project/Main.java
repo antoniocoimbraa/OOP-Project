@@ -57,6 +57,7 @@ public class Main {
 		pokerHand = new PokerHand(card.toArray());
 		System.out.println(Arrays.toString(pokerHand.check()));
 		
+		card = Card.newDeck("JD KD QD TD ND");
 		
 		card = new LinkedList<Card>();
 		card.add(new Card(Rank.JACK,Suit.DIAMONDS));
