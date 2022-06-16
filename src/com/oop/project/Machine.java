@@ -2,172 +2,242 @@ package com.oop.project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-// TODO: create method to print commands
-// TODO: create method to print results
 public class Machine {
+	
+	// store the total number of bets
+	private int bet;
 	
 	// Stores the name of the file that contains the cards for debug mode
 	private String cardFile;
 
+	// Stores commands
+	private Deque<String> feed = new LinkedList<>();
+	
 	// Stores the name the file that contains the commands for debug mode
-	private String cmdFile;
-	
-	// TODO: change cmdList type from String[] to fifo set type
-	// Stores the list of commands
-	private String[] cmdList;
-	
-	// TODO: change cardList type from String[] to fifo set type
-	private String[] cardList;
+	private String commandFile;
 	
 	// Store the total amount of credits available to the player.
 	private int credit;
 	
-	// Stores the present deck being played
-	private Deck deck;
+	// Stores list of cards
+	private Deque<Card> deck = new LinkedList<>();
+	
+	// Stores current hand
+	private Deque<Card> hand = new LinkedList<>();
 	
 	// Stores game mode type. (d)debug mode or (s)simulation mode.
 	private char mode;
 	
+	// Total number of deals
+	private int nbdeals;
 	
-	// Constructor
-	Machine(Deck deck) {
-		this.deck = deck;
-	}
 	
 	// CONSTRUCTOR
-	// TODO: code for simulation mode
-	Machine(String[] cmmdLine) {
-		char mode = cmmdLine[0].toCharArray()[1];
-		
-		switch(mode) {
-			// Case for (d)ebug mode
-			case 'd':
-				this.cardFileName = cmmdLine[2];
-				this.cmdFileName = cmmdLine[3];
-				this.cardList = parseFile(cmmdLine[2]);
-				this.cmdList = parseFile(cmmdLine[3]);
-				this.credit = (int) Integer.parseInt(cmmdLine[1]);
-				this.deck = new Deck();
-				this.mode = cmmdLine[0].toCharArray()[1];
-				break;
-			// Case for (s)imulation mode
-			case 's':
-				break;
-			default:
-				System.out.println("Machine constructor failed!");
-				break;
+	Machine(String[] args) {		
+		try {
+			this.mode = args[0].charAt(1);
+			
+			String cmdEntry1 = args[1];
+			String cmdEntry2 = args[2];
+			String cmdEntry3 = args[3];
+			
+			switch(this.mode) {
+				case 'd': Debug(cmdEntry1,cmdEntry2,cmdEntry3); break;
+				case 's': Simulation(cmdEntry1,cmdEntry2,cmdEntry3); break;					
+					default: 
+						System.out.println(""); break;
+			}
+			
+		} catch(IndexOutOfBoundsException e) {
+			System.out.println("Invalide mode. Pick 'd' or 's'.");
 		}
-	}
-	
-	// GETTERS AND SETTER METHODS
-	public String getCardFileName() {
-		return cardFileName;
-	}
-	
-	public String getCmdFileName() {
-		return cmdFileName;
-	}
-	
-	public int getCredits() {
-		return credit;
-	}	
-
-	public String getCmdList() {
-		return cmdList.toString();
-	}
-
-	public String getCardList() {
-		return cardList.toString();
-	}
-	
-	public Deck getDeck() {
-		return deck;
-	}
-	
-	public char getMode() {
-		return mode;
-	}
-	
-	public void setFileCard(String cardFileName) {
-		this.cardFileName = cardFileName;
-	}
-	
-	public void setFileCmd(String cmdFileName) {
-		this.cmdFileName = cmdFileName;
 	}
 
 	@Override
 	public String toString() {
-		String cardFile = "card file: " + this.cardFile + "\n";
-		String cmdFile = "cmd file: " + this.cmdFile + "\n";
-		String card = "cards: " + this.cardList + "\n";
-		String cmd = "cmd: " + this.cmdList + "\n";
-		String credit = "credit(s): " + this.credit + "\n";
-		String deck = "deck:\n" + this.deck;
-		String mode = "mode: " + this.mode + "\n";
+		String mode = String.valueOf(this.mode);
 		
-		return cardFile+cmdFile+card+cmd+credit+deck+mode;
+		String header = "";
+		String end = "";
+		
+		String bet = "\tBet = " + String.valueOf(this.bet) + "\n";
+		String cardFile = "\tCard file = " + this.cardFile + "\n";
+		String feed = "\tCommands = " + this.feed.toString() + "\n";
+		String commandFile = "\tCommand file " + this.commandFile + "\n";
+		String credit = "\tCredit = " + String.valueOf(this.credit) + "\n";
+		String deck = "\tDeck = " + this.deck.toString() + "\n";	
+		String nbdeals = "\tTotal deals = " + String.valueOf(this.nbdeals) + "\n";
+		
+		switch(mode) {
+		case "d": 
+			header = "(Debug mode)\n";
+			end = "(Debug mode end)\n\n\n";
+			break;
+		case "s": 
+			header = "(Simulation mode)\n";
+			end = "(Simulation mode end)\n\n\n";
+			break;
+		}
+		
+		return header + 
+				bet + credit + nbdeals + "\n" +
+				commandFile + feed + "\n" +
+				cardFile + deck + 
+				end;
 	}
 	
-	// CUSTOM METHODS
-	// TODO: Create a welcome method upon machine constructor call
-	// TODO: Create a shuffle method to shuffle deck of cards
-	public String[] parseFile(String cmdFileName) {
+	private void Debug(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
+		this.bet = 5;
+		this.cardFile = cmdEntry3;
 		
-		File fp = new File(cmdFileName);
+		for(String cmd:parse(cmdEntry2))
+			feed.add(cmd);
+		
+		this.commandFile = cmdEntry2;
+		this.credit = Integer.valueOf(cmdEntry1);
+		
+		this.deck = Card.newDeck(parse(cmdEntry3));
+		
+		this.nbdeals = 0;
+	}
+	
+	private void Simulation(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
+		this.bet = Integer.valueOf(cmdEntry2);
+		this.cardFile = "(no file needed for simulation mode)";
+		this.feed = null;
+		this.commandFile = "(no file neede for simulation mode)";
+		this.credit = Integer.valueOf(cmdEntry1);
+		this.deck = Card.newDeck();
+		this.nbdeals = Integer.valueOf(cmdEntry3);
+	}
+	
+	private static String[] parse(String fileName) {
+		File fp = new File(fileName);
 		Scanner sc = null;
-		
-		String data = "";
+		String line = "";
 		
 		try {
 			sc = new Scanner(fp);
 			while(sc.hasNextLine()) {
-				data = sc.nextLine();
+				line = sc.nextLine();
 			}
 			sc.close();
-			return data.split(" ");
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			return line.split(" ");
+		} catch(FileNotFoundException e) {
 			e.printStackTrace();
-			return new String[]{};
+			System.out.println("Machine can't open file: " + fileName);
+			return new String[] {};
 		}
 	}
 	
-	// Parse command line
-	public String[] parseCmd(String cmdLine) {
-		System.out.println(cmdLine.split(cmdLine));
-		return cmdLine.split(cmdLine);
+	public void play() {
+		while(this.feed.peekFirst() != null) {
+			String cmd = this.feed.removeFirst();
+			switch(Command.getConstant(cmd)) {
+				case BET: Bet(); break;
+				case CREDIT: Credit(); break;
+				case DEAL: Deal(); break;
+				case HOLD: Hold(); break;
+				case ADVICE: Advice(); break;
+				case STATISTICS: Statistics(); break;
+					default:
+						System.out.println("Invalid command");
+						break;
+			}
+		}
 	}
 	
-	// Counts the total cards of a deck
-	public String count() {
+	private void Bet() {
+		System.out.println("-cmd b" );
+		System.out.println("Player is betting " + bet);
+		System.out.println();
+		credit = credit - bet;
+	}
+	
+	private void Credit() {
+		System.out.println("-cmd $" );
+		System.out.println("Player's credit is " + credit);
+		System.out.println();
+	}
+	
+	private void Deal() {
+		hand = new ArrayDeque<>(drawCard(5));
+		if(deck.size() > 6) {
+			System.out.println("-cmd d" );
+			System.out.print("Player's hand");
+			for(Card card:hand)
+				System.out.print(" " + card);
+			System.out.println("");
+			System.out.println("");
+		}
+		else 
+			System.out.println("There are not enough cards to complete this game");
+	}
+	
+	private void Hold() {
+		List<Card> hand = new LinkedList<>(this.hand);
+		
+		if(deck.size() > 1) {
+			try {
+				int hold1 = Integer.valueOf(feed.removeFirst());
+				int hold2 = Integer.valueOf(feed.removeFirst());
+				
+				if(hold1 > 0 && hold1 < 6 && hold2 > 0 && hold2 < 6) {
+					hand.set(hold1 - 1, deck.removeFirst());
+					hand.set(hold2 - 1, deck.removeFirst());
+					
+					System.out.println("-cmd h " + hold1 + " " + hold2);
+					System.out.print("Player's hand");
+					for(Card card:hand)
+						System.out.print(" " + card);
+					System.out.println();
+					System.out.println();
+				}
+				else {
+					System.out.println("Out of bound hold.");
+				}
+			} catch(NumberFormatException e) {
+				System.out.println("Invalid hold positions");
+			}
+		}
+	}
+	
+	private void Advice() {
+		
+	}
+	
+	private void Statistics() {
+		
+	}
+	
+	public String deckSize() {
 		return String.valueOf(deck.size());
 	}
 	
-	// Displays the deck
-	public String deck() {
-		return this.deck.toString();
+	public Deque<Card> drawCard(int numberOfDraws) {
+		Deque<Card> deck = new LinkedList<Card>();
+		for(int i = 0; i < numberOfDraws; i++) {
+			try {
+				deck.add(this.deck.removeFirst());
+			} catch(NoSuchElementException  e) {
+				System.out.println("Deck is empty");
+			}
+		}
+		return new LinkedList<Card>(deck);
 	}
 	
-	// Draw cards
-	public String draw(int numberOfDraws) {
-		return deck.draw(numberOfDraws);
+	public String shuffleDeck() {
+		List<Card> deck = new LinkedList<Card>(this.deck);
+		Collections.shuffle(deck);
+		this.deck = new ArrayDeque<Card>(deck);
+		return this.deck.toString(); 
 	}
-	
-	// New deck
-	public String newDeck() {
-		this.deck = new Deck();
-		return this.deck.toString();
-	}
-	
-	// shuffles deck
-	public String shuffle() {
-		this.deck.shuffle();
-		return this.deck.toString();
-	}
-	
-	
 }

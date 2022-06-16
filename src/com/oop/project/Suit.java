@@ -1,46 +1,38 @@
 package com.oop.project;
 
+import java.util.HashMap;
+
 enum Suit {
 	// 4 suits + 2 jokers
-	CLUBS('C'), DIAMONDS('D'), HEARTS('H'), SPADES('S'),
+	CLUBS("C"), DIAMONDS("D"), HEARTS("H"), SPADES("S"),
 	// Black and white joker (fOol)
-	BWJOKER('O'),
+	BWJOKER("O"),
 	// Colored joker (fooL)
-	CJOKER('L');
+	CJOKER("L");
 	
+	private final String suit;
+	private static final HashMap<String,Suit> map;
 	
-	
-	private final char suit;
-	
-	
-	
-	// CONSTRUCTOR
-	Suit(char suit) {
+	Suit(String suit) {
 		this.suit = suit;
 	}
 	
-	// Check if the current enum set as an element with equal value
-	public static Suit belong(char value) {
-		switch(value) {
-			case 'C':
-				return Suit.CLUBS;
-			case 'D':
-				return Suit.DIAMONDS;
-			case 'H':
-				return Suit.HEARTS;
-			case 'S':
-				return Suit.SPADES;
-			case 'O':
-				return Suit.BWJOKER;
-			case 'L':
-				return Suit.CJOKER;
-			default:
-				return null;
-		}
+	public String getSuit() {
+		return suit;
+	}
+		
+	static {
+		map = new HashMap<String,Suit>();
+		
+		for(Suit s:Suit.values())
+			try {
+				map.put(s.getSuit(),s);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 	
-	@Override
-	public String toString() {
-		return String.valueOf(suit);
+	public static Suit getConstant(String constant) {
+		return map.get(constant);
 	}
 }

@@ -1,91 +1,73 @@
 package com.oop.project;
 
-import java.util.Objects;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
-class Card {
+class Card implements Comparable<Card> {
 	
 	private final Rank rank;
 	private final Suit suit;
 	
-	// by convention: 3C (rank, suit)
-	// TODO: code for null case
-	// TODO: add throw exception
-	Card (String card) {
-		// by convention: rankSuit[0] = rank, rankSuit[1] = suit 
-		char[] rankSuit = card.toCharArray();
+	private static final Deque<Card> deck = new ArrayDeque<Card>();
+	
+	Card (Rank rank, Suit suit) {
+        if (rank == null || suit == null)
+            throw new NullPointerException(rank + ", " + suit);
+        this.rank = rank;
+        this.suit = suit;
+	}
+	
+	@Override
+    public int compareTo(Card c) {
+		return rank.compareTo(c.rank);
+    }
 
-		this.rank = Rank.belong(rankSuit[0]);
-		this.suit = Suit.belong(rankSuit[1]);
-	}
-	
-	public Rank getRank() {
-		return rank;
-	}
-	
-	public Suit getSuit() {
-		return suit;
-	}
-	
 	@Override
 	public String toString() {
-		return rank.toString() + suit.toString();
+		return rank.getRank() + suit.getSuit();
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(rank, suit);
+	
+	static {
+		for(Suit suit: Suit.values())
+			for(Rank rank: Rank.values())
+				if(!rank.equals(Rank.BWJOKER) && !rank.equals(Rank.CJOKER))
+					if(!suit.equals(Suit.BWJOKER) && !suit.equals(Suit.CJOKER))
+						deck.addLast(new Card(rank,suit));
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	
+	public boolean isNeighbour(Card card) {
+		if(card.rank.ordinal() + 1 == rank.ordinal())
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Card other = (Card) obj;
-		return rank == other.rank && suit == other.suit;
+		if(card.rank.ordinal() == rank.ordinal())
+			return true;
+		return false;
 	}
 	
-	
-	
-	// Custom methods
-	
-	// Check if the card is valid
-	public static boolean valid(String card) {
-		
-		char[] rankSuit = card.toCharArray();
-		
-		// Checks the string for length 2
-		boolean condLength = rankSuit.length == 2;
-		
-		// Checks if rank and suit are not null
-		boolean condRankNull = Rank.belong(rankSuit[0]) == null;
-		boolean condSuitNull = Suit.belong(rankSuit[1]) == null;
-		
-		// Checks for foul card (anything that has a joker) (e.g.): "FC", "OC or "FD"
-		boolean condRankBWJOKER = Rank.belong(rankSuit[0]) == Rank.BWJOKER;
-		boolean condSuitBWJOKER = Suit.belong(rankSuit[1]) == Suit.BWJOKER;
-		boolean condRankCJOKER = Rank.belong(rankSuit[0]) == Rank.CJOKER;
-		boolean condSuitCJOKER = Suit.belong(rankSuit[1]) == Suit.CJOKER;
-	
-		
-		if(condLength)
-			// Checks for valid chars for cards 
-			if(!condRankNull && !condSuitNull) {
-				// True for cards "FO"
-				if(condRankBWJOKER && condSuitBWJOKER)
-					return true;
-				// True for cards "OL"
-				if(condRankCJOKER && condSuitCJOKER)
-					return true;
-				// True if card has no joker chars (e.g.) "F*", "*O" or "FO"
-				if(!condRankBWJOKER && !condSuitBWJOKER)
-					if(!condRankCJOKER && !condRankCJOKER)
-						return true;
-			}
-			
+	public boolean isSuit(Card card) {
+		if(suit.compareTo(card.suit) == 0)
+			return true;
 		return false;
+	}
+		
+	public static Deque<Card> newDeck() {
+		return new ArrayDeque<Card>(deck);
+	}
+	
+	public static Deque<Card> newDeck(String[] cards) {
+		Deque<Card> deck = new ArrayDeque<Card>();
+		
+		for(String card:cards) {
+			try {
+				String srank = String.valueOf(card.charAt(0));
+				String ssuit = String.valueOf(card.charAt(1));
+				Rank rank = Rank.getConstant(srank);
+				Suit suit = Suit.getConstant(ssuit);
+				deck.addLast(new Card(rank,suit));
+			} catch(NullPointerException | IndexOutOfBoundsException e) {
+				System.out.println("Invalid card: " + card + " (didn't add it).");
+			}
+		}
+		
+		return new ArrayDeque<Card>(deck);
 	}
 }
