@@ -1,10 +1,7 @@
 package com.oop.project;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class PokerHand {
 	
@@ -12,7 +9,6 @@ public class PokerHand {
 	private final List<Card> hand = Arrays.asList(new Card[handSize]);
 	
 	PokerHand() {
-		// Default intialization
 		hand.set(0, new Card(Rank.ACE,Suit.SPADES));
 		hand.set(1, new Card(Rank.ACE,Suit.DIAMONDS));
 		hand.set(2, new Card(Rank.ACE,Suit.CLUBS));
@@ -45,48 +41,38 @@ public class PokerHand {
 	}
 	
 	private boolean jackOrBetter() {
-		int i = 0;
-		int j = 0;
-		
-		int size = hand.size();
-
-		int hits = 0;
-		
-		boolean[] result = {false, false, false, false};
-		Set<Rank> ranks = new HashSet<>();
-
-				
+		return false;
 	}
 	
 	private boolean twoPair() {
-		
+		return false;
 	}
 	
 	private boolean threeOfAKind() {
-		
+		return false;
 	}
 	
 	private boolean straight() {
-		
+		return false;
 	}
 	
 	private boolean flush() {
-		
+		return false;
 	}
 	
 	private boolean fullHouse() {
-		
+		return false;
 	}
 	
 	private boolean fourOfAKind() {
-		
+		return false;
 	}
 	
 	private boolean straightFlush() {
-		
+		return false;
 	}
 	
 	private boolean royalFlush() {
-		
+		return false;
 	}
 }
