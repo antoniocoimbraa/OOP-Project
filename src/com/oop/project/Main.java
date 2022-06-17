@@ -1,11 +1,5 @@
 package com.oop.project;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 //Source: https://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.9
 
 public class Main {
@@ -45,7 +39,7 @@ public class Main {
 			System.out.println(entry.getKey() + " " + entry.getValue());
 		*/
 		
-		
+		/*
 		// Jack or better
 		List<Card> card = new LinkedList<Card>();
 		PokerHand pokerHand = null;
@@ -57,7 +51,7 @@ public class Main {
 		pokerHand = new PokerHand(card.toArray());
 		System.out.println(Arrays.toString(pokerHand.check()));
 		
-		card = Card.newDeck("JD KD QD TD ND");
+		//card = Card.newDeck("JD KD QD TD ND");
 		
 		card = new LinkedList<Card>();
 		card.add(new Card(Rank.JACK,Suit.DIAMONDS));
@@ -86,12 +80,13 @@ public class Main {
 		card.add(new Card(Rank.TWO,Suit.DIAMONDS));
 		pokerHand = new PokerHand(card.toArray());
 		System.out.println(Arrays.toString(pokerHand.check()));
+		*/
 		
-		
-		/*
 		Machine machine = new Machine(args);
 		System.out.println(machine);
 		machine.play();
-		*/
+		
+		Statistics statistics = new Statistics();
+		System.out.println(statistics);
 	}
 }

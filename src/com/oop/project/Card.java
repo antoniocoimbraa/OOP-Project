@@ -7,12 +7,7 @@ class Card implements Comparable<Card> {
 	
 	private final Rank rank;
 	private final Suit suit;
-	
 	private static final Deque<Card> deck = new ArrayDeque<Card>();
-	
-	Card() {
-		
-	}
 	
 	Card (Rank rank, Suit suit) {
         if (rank == null || suit == null)
@@ -46,18 +41,10 @@ class Card implements Comparable<Card> {
 	}
 	
 	public boolean isNeighbour(Card card) {
-		
-		
 		if(card.rank.ordinal() + 1 == rank.ordinal())
 			return true;
 		if(card.rank.ordinal() == rank.ordinal() + 1)
 			return true;
-		
-		// Check for low ace
-		if(card.rank == Rank.ACE)
-			if(rank == Rank.TWO)
-				return true;
-		
 		return false;
 	}
 	
