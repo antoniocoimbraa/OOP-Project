@@ -67,6 +67,31 @@ enum Play {
 		return false;
 	}
 	
+	public static boolean FOURACES(Object[] cards) {		
+		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
+			if(entry.getValue() == 4)
+				if(Rank.ACE.equals(entry.getKey()));
+		return false;
+	}
+	
+	public static boolean FOUR24(Object[] cards) {		
+		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
+			if(entry.getValue() == 4)
+				if(Rank.TWO.compareTo(entry.getKey()) <= 0)
+					if(Rank.FOUR.compareTo(entry.getKey()) >= 0)
+						return true;
+		return false;
+	}
+	
+	public static boolean FOUR5K(Object[] cards) {		
+		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
+			if(entry.getValue() == 4)
+				if(Rank.FIVE.compareTo(entry.getKey()) <= 0)
+					if(Rank.KING.compareTo(entry.getKey()) >= 0)
+						return true;
+		return false;
+	}
+	
 	private static boolean fourOfAKind(Object[] cards) {		
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
 			if(entry.getValue() == 4)

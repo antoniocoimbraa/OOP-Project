@@ -31,6 +31,7 @@ public enum Bonus {
 	
 	/**
 	 * String value of pay constants.
+	 * 
 	 * @return String pay value
 	 */
 	@Override
@@ -38,5 +39,22 @@ public enum Bonus {
 		return String.valueOf(bonus);
 	}
 	
-	public 
+	public static Integer bonus(PokerHand hand) {
+		Object[] cards = hand.getHand().toArray();
+		Play play = Play.check(cards);
+		if(play.equals(Play.ROYALFLUSH)) return ROYALFLUSH.getBonus();
+		
+		if(Play.FOURACES(cards)) return FOURACES.getBonus();
+		if(Play.FOUR24(cards)) return FOUR24.getBonus();
+		if(Play.FOUR5K(cards))return FOUR5K.getBonus();
+		
+		if(play.equals(Play.STRAIGHTFLUSH)) return STRAIGHTFLUSH.getBonus();
+		if(play.equals(Play.FULLHOUSE)) return FULLHOUSE.getBonus();
+		if(play.equals(Play.FLUSH)) return STRAIGHT.getBonus();
+		if(play.equals(Play.STRAIGHT)) return STRAIGHT.getBonus();
+		if(play.equals(Play.THREEOFAKIND)) return THREEOFAKIND.getBonus();
+		if(play.equals(Play.TWOPAIR)) return TWOPAIR.getBonus();
+		if(play.equals(Play.JACKSORBETTER)) return JACKSORBETTER.getBonus();
+		return 0;
+	}
 }
