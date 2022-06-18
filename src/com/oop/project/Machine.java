@@ -41,7 +41,6 @@ public class Machine {
 	// Total number of deals
 	private int nbdeals;
 	
-	
 	// CONSTRUCTOR
 	Machine(String[] args) {		
 		try {
