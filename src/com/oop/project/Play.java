@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 enum Play {
-	OTHER("OTHER"), JACKSORBETTER("JACKS OR BETTER"),TWOPAIR("TWO PAIR"),THREEOFAKIND("THREE OF A KIND"),
-	STRAIGHT("STRAIGHT"), FLUSH("FLUSH"), FULLHOUSE("FULL HOUSE"),
-	FOUROFAKIND("FOUR OF A KIND"), STRAIGHTFLUSH("STRAIGHT FLUSH"),
-	ROYALFLUSH("ROYAL FLUSH");
+	OTHER("OTHER"), JACKSORBETTER("JACKS OR BETTER"),TWOPAIR("TWO PAIR"),
+	THREEOFAKIND("THREE OF A KIND"), STRAIGHT("STRAIGHT"), FLUSH("FLUSH"),
+	FULLHOUSE("FULL HOUSE"), FOUROFAKIND("FOUR OF A KIND"), 
+	STRAIGHTFLUSH("STRAIGHT FLUSH"), ROYALFLUSH("ROYAL FLUSH");
 	
 	private final String play;
 	private static Map<Rank,Integer> rankHits = new HashMap<Rank,Integer>();
@@ -51,7 +51,6 @@ enum Play {
 				suitHits.put(suit, ++countSuit);
 		}
 	}
-	
 	
 	private static boolean jackOrBetter(Object[] cards) {
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())

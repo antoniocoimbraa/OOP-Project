@@ -1,22 +1,15 @@
 package com.oop.project;
 
 public class Statistics {
-
-	// Play is of enum type
-	private int credit = 0;
-	private final int size = Play.values().length;
-	private final int[] statistics = new int[size];
+	private final static int size = Play.values().length;
+	private final static int[] statistics = new int[size];
 	
-	Statistics() {
+	Statistics() { }
+	
+	static {
 		int i = 0;
 		for(i = 0; i < size; i++)
 			statistics[i] = 0;
-	}
-	
-	public String sum(int i) {
-		int sum = ++statistics[i];
-		statistics[i] = sum;
-		return String.valueOf(sum);
 	}
 	
 	public String sum(Play play) {
