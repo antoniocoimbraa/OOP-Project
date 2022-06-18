@@ -25,7 +25,7 @@ public enum Bonus {
 	 * Pay variable get function.
 	 * @return pay value
 	 */
-	public Integer getPay() {
+	public Integer getBonus() {
 		return bonus;
 	}
 	
@@ -37,4 +37,6 @@ public enum Bonus {
 	public String toString() {
 		return String.valueOf(bonus);
 	}
+	
+	public 
 }

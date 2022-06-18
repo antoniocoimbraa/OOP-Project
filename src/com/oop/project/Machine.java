@@ -3,6 +3,7 @@ package com.oop.project;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -19,13 +20,13 @@ public class Machine {
 	private String cardFile;
 
 	// Stores commands
-	private Deque<String> feed = new LinkedList<>();
+	private List<String> feed = null;
 	
 	// Stores the name the file that contains the commands for debug mode
 	private String commandFile;
 	
 	// Store the total amount of credits available to the player.
-	private static int credit;
+	private int credit = 10000;
 	
 	// Stores list of cards
 	private Deque<Card> deck = new LinkedList<>();
@@ -39,7 +40,7 @@ public class Machine {
 	private char mode;
 	
 	// Total number of deals
-	private int nbdeals;
+	private int nbdeals = 0;
 	
 	// CONSTRUCTOR
 	Machine(String[] args) {		
@@ -56,18 +57,9 @@ public class Machine {
 					default: 
 						System.out.println(""); break;
 			}
-			
 		} catch(IndexOutOfBoundsException e) {
 			System.out.println("Invalide mode. Pick 'd' or 's'.");
 		}
-	}
-	
-	public String getCredit() {
-		return String.valueOf(credit);
-	}
-	
-	static {
-		credit = 1000;
 	}
 
 	@Override
@@ -81,7 +73,7 @@ public class Machine {
 		String cardFile = "\tCard file = " + this.cardFile + "\n";
 		String feed = "\tCommands = " + this.feed.toString() + "\n";
 		String commandFile = "\tCommand file " + this.commandFile + "\n";
-		String credit = "\tCredit = " + String.valueOf(getCredit()) + "\n";
+		String credit = "\tCredit = " + String.valueOf(this.credit) + "\n";
 		String deck = "\tDeck = " + this.deck.toString() + "\n";	
 		String nbdeals = "\tTotal deals = " + String.valueOf(this.nbdeals) + "\n";
 		
@@ -95,7 +87,6 @@ public class Machine {
 			end = "(Simulation mode end)\n\n\n";
 			break;
 		}
-		
 		return header + 
 				bet + credit + nbdeals + "\n" +
 				commandFile + feed + "\n" +
@@ -104,20 +95,18 @@ public class Machine {
 	}
 	
 	private void Debug(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
-		this.bet = 5;
 		this.cardFile = cmdEntry3;
-		for(String cmd:parse(cmdEntry2))
+		String[] cmds = parse(cmdEntry2);
+		feed = new ArrayList<>(cmds.length);
+		for(String cmd:cmds)
 			feed.add(cmd);
-		
 		this.commandFile = cmdEntry2;
 		this.deck = Card.newDeck(parse(cmdEntry3));
-		this.nbdeals = 0;
 	}
 	
 	private void Simulation(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
 		this.bet = Integer.valueOf(cmdEntry2);
 		this.cardFile = "(no file needed for simulation mode)";
-		this.feed = null;
 		this.commandFile = "(no file neede for simulation mode)";
 		this.deck = Card.newDeck();
 		this.nbdeals = Integer.valueOf(cmdEntry3);
@@ -143,108 +132,278 @@ public class Machine {
 	}
 	
 	public void play() {
-		while(this.feed.peekFirst() != null) {
-			String cmd = this.feed.removeFirst();
-			try {
-				Integer.valueOf(cmd);
-			} catch(NumberFormatException e) {
-				switch(Command.getConstant(cmd)) {
-				case BET: Bet(); break;
-				case CREDIT: Credit(); break;
-				case DEAL: Deal(); break;
-				case HOLD: Hold(); break;
-				case ADVICE: Advice(); break;
-				case STATISTICS: Statistics(); break;
-					default:
-						System.out.println("Invalid command");
-						break;
-				}
-			}
-		}
-	}
-	
-	private void Bet() {
-		System.out.println("-cmd b" );
-		System.out.println("Player is betting " + bet);
-		System.out.println();
-		credit = credit - bet;
-	}
-	
-	private void Credit() {
-		System.out.println("-cmd $" );
-		System.out.println("Player's credit is " + credit);
-		System.out.println();
-	}
-	
-	private void Deal() {
-		if(deck.size() > 7) {
-			hand = new PokerHand(drawCard(5).toArray());
-			/*
-			for(Card card:drawCard(5)) {
-				i++;
-				hand.set(i, card);
-			}
-			*/
-			System.out.println("-cmd d" );
-			System.out.println("Player's hand " + hand);
-			System.out.println("");
-		}
-		else 
-			System.out.println("There are not enough cards to complete this game");
-	}
-	
-	private void Hold() {
 		int i = 0;
+		boolean bet = false;
+		boolean deal = false;
+		boolean hold = false;
+		
+		Integer num = 0;
+		Command cmdAux = null;
+		
 		Play play = null;
-		int hold1 = 0;
-		int hold2 = 0;
-		if(deck.size() > 1) {
-			try {
-				hold1 = Integer.valueOf(feed.removeFirst());
-				hold2 = Integer.valueOf(feed.removeFirst());
-				
-				if(hold1 > 0 && hold1 < 6 && hold2 > 0 && hold2 < 6) {
-					for(i = 1; i < 6;i++)
-						if(i != hold1 && i != hold2)
-							hand = hand.hold(i,drawCard(1).toArray());
-					play = Play.check(hand.getHand().toArray());
-					System.out.println("-cmd h " + hold1 + " " + hold2);
-					System.out.println("Player's hand " + hand);
+		
+		boolean[] hld = new boolean[] {false,false,false,false,false};
+		
+		for(String command:feed) {
+			cmdAux = Command.getConstant(command);
+			
+			if(cmdAux != null) {
+				if(cmdAux.equals(Command.BET)) {
+					if(bet) {
+						System.out.println("Player is betting " + this.bet);
+						System.out.println("");
+						bet = false;
+					}
 					
+					if(deal && hold) {
+						play = Play.check(hand.getHand().toArray());
+						statistics.sum(play);
+						
+						for(i = 0; i < 5; i++)
+							if(hld[i])
+								System.out.print(" " + (i+1));
+						System.out.println();
+						
+						System.out.println("Player's hand " + hand.toString());
+						if(play.equals(Play.OTHER)) {
+							this.credit = this.credit - this.bet;
+							System.out.println("player loses and his credit is " + this.credit);
+							System.out.println();
+						}
+						else {
+							//TODO:
+							System.out.println("player wins with a " + 
+									play + " and his credit is" + credit);
+						}
+						
+						hld = new boolean[] {false,false,false,false,false};
+						deal = false;
+						hold = false;
+					}
 					
-					statistics.sum(play);
+					System.out.println("-cmd "+Command.BET.getCommand());
+					bet = true;
+				}
+				if(cmdAux.equals(Command.CREDIT)) {
+					if(bet) {
+						System.out.println("Player is betting " + this.bet);
+						System.out.println("");
+						bet = false;
+					}
+					
+					if(deal && hold) {
+						play = Play.check(hand.getHand().toArray());
+						statistics.sum(play);
+						
+						for(i = 0; i < 5; i++)
+							if(hld[i])
+								System.out.print(" " + (i+1));
+						System.out.println();
 
-					
-					
-					if(play == Play.OTHER) {
-						System.out.println("player loses and his credit is " + credit);
-						System.out.println(statistics);
+						System.out.println("Player's hand " + hand.toString());
+						if(play.equals(Play.OTHER)) {
+							this.credit = this.credit - this.bet;
+							System.out.println("player loses and his credit is " + this.credit);
+							System.out.println();
+						}
+						else {
+							//TODO:
+							System.out.println("player wins with a " + 
+									play + " and his credit is" + credit);
+						}
+						
+						hld = new boolean[] {false,false,false,false,false};
+						deal = false;
+						hold = false;
 					}
-					else {
-						System.out.println("players wins with a " + play + " and his credit is " + credit + bet);
-						System.out.println(statistics);
+				}
+				if(cmdAux.equals(Command.DEAL)) {
+					if(bet) {
+						System.out.println("Player is betting " + this.bet);
+						System.out.println("");
+						bet = false;
 					}
-					System.out.println();
+					
+					if(deal && hold) {
+						play = Play.check(hand.getHand().toArray());
+						statistics.sum(play);
+						
+						for(i = 0; i < 5; i++)
+							if(hld[i])
+								System.out.print(" " + (i+1));
+						System.out.println();
+						
+						System.out.println("Player's hand " + hand.toString());
+						if(play.equals(Play.OTHER)) {
+							this.credit = this.credit - this.bet;
+							System.out.println("player loses and his credit is " + this.credit);
+							System.out.println();
+						}
+						else {
+							//TODO:
+							System.out.println("player wins with a " + 
+									play + " and his credit is" + credit);
+						}
+
+						hld = new boolean[] {false,false,false,false,false};
+						deal = false;
+						hold = false;
+					}
+					
+					if(!deal) {
+						// starts hand
+						hand = new PokerHand(drawCard(5).toArray());
+						deal = true;
+					} else {
+						System.out.println(Command.DEAL.getCommand() + ": already dealt");
+					}
 				}
-				else {
-					System.out.println("Out of bound hold.");
+				if(cmdAux.equals(Command.HOLD)) {
+					if(bet) {
+						System.out.println("Player is betting " + this.bet);
+						System.out.println("");
+						bet = false;
+					}
+					
+					if(deal && hold) {
+						play = Play.check(hand.getHand().toArray());
+						statistics.sum(play);
+						
+						for(i = 0; i < 5; i++)
+							if(hld[i])
+								System.out.print(" " + (i+1));
+						System.out.println();
+						
+						System.out.println("Player's hand " + hand.toString());
+						if(play.equals(Play.OTHER)) {
+							this.credit = this.credit - this.bet;
+							System.out.println("player loses and his credit is " + this.credit);
+							System.out.println();
+						}
+						else {
+							//TODO:
+							System.out.println("player wins with a " + 
+									play + " and his credit is" + credit);
+						}
+
+						hld = new boolean[] {false,false,false,false,false};
+						deal = false;
+						hold = false;
+					}
+					
+					if(deal) {
+						if(!hold) {
+							hold = true;
+							System.out.print("-cmd " + Command.HOLD.getCommand());
+						}
+						else {
+							System.out.println(Command.HOLD.getCommand()+": illegal hold");
+						}
+					} else {
+						System.out.println(Command.HOLD.getCommand() + ": illegal hold");
+					}
+					
 				}
-			} catch(NumberFormatException e) {
-				System.out.println("Invalid hold positions");
+				if(cmdAux.equals(Command.ADVICE)) {
+					if(bet) {
+						System.out.println("Player is betting " + this.bet);
+						System.out.println("");
+						bet = false;
+					}
+					
+					if(deal && hold) {
+						play = Play.check(hand.getHand().toArray());
+						statistics.sum(play);
+						
+						for(i = 0; i < 5; i++)
+							if(hld[i])
+								System.out.print(" " + (i+1));
+						System.out.println();
+						
+						System.out.println("Player's hand " + hand.toString());
+						if(play.equals(Play.OTHER)) {
+							this.credit = this.credit - this.bet;
+							System.out.println("player loses and his credit is " + this.credit);
+							System.out.println();
+						}
+						else {
+							//TODO:
+							System.out.println("player wins with a " + 
+									play + " and his credit is" + credit);
+						}
+
+						hld = new boolean[] {false,false,false,false,false};
+						deal = false;
+						hold = false;
+					}
+				}
+				if(cmdAux.equals(Command.STATISTICS)) {
+					if(bet) {
+						System.out.println("Player is betting " + this.bet);
+						System.out.println("");
+						bet = false;
+					}
+					
+					if(deal && hold) {
+						play = Play.check(hand.getHand().toArray());
+						statistics.sum(play);
+						
+						for(i = 0; i < 5; i++)
+							if(hld[i])
+								System.out.print(" " + (i+1));
+						System.out.println();
+						
+						System.out.println("Player's hand " + hand.toString());
+						if(play.equals(Play.OTHER)) {
+							this.credit = this.credit - this.bet;
+							System.out.println("player loses and his credit is " + this.credit);
+							System.out.println();
+						}
+						else {
+							//TODO:
+							System.out.println("player wins with a " + 
+									play + " and his credit is" + credit);
+						}
+						
+						hld = new boolean[] {false,false,false,false,false};
+						deal = false;
+						hold = false;
+					}
+				}
+			}
+			else {
+				try {
+					num = Integer.valueOf(command);
+					
+					if(bet) {
+						if(num > 0 && num < 6) {
+							this.bet = num;
+							System.out.println("Player is betting " + num);
+							System.out.println("");	
+						}
+						else {
+							System.out.println(Command.BET.getCommand() + ": illegal amount");
+							System.out.println("");
+						}
+						bet = false;
+					} 
+					if(deal && hold) {
+						if(num > 0 && num < 6) {
+							hld[num - 1] = true;
+						}
+						else {
+							System.out.println(num + " :Out of range");
+							System.out.println("");
+						}
+					} else {
+						System.out.println("Invalid input");
+					}
+					
+				} catch(NumberFormatException e) {
+					System.out.println("Invalid input");
+				}
 			}
 		}
-	}
-	
-	private void Advice() {
-		
-	}
-	
-	private void Statistics() {
-		
-	}
-	
-	public String deckSize() {
-		return String.valueOf(deck.size());
 	}
 	
 	public Deque<Card> drawCard(int numberOfDraws) {
