@@ -17,7 +17,7 @@ public enum Bonus {
 	 * Constructor
 	 * @param pay multiplier value for the game
 	 */
-	Pay(Integer bonus) {
+	Bonus(Integer bonus) {
 		this.bonus = bonus;
 	}
 	
