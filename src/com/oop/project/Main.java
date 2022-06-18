@@ -85,8 +85,5 @@ public class Main {
 		Machine machine = new Machine(args);
 		System.out.println(machine);
 		machine.play();
-		
-		Statistics statistics = new Statistics();
-		System.out.println(statistics);
 	}
 }

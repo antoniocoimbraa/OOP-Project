@@ -33,10 +33,7 @@ public class Machine {
 	// 
 	private PokerHand hand;
 	
-	//
 	private final Statistics statistics = new Statistics();
-	
-	private final Statistics stat = new Statistics();
 	
 	// Stores game mode type. (d)debug mode or (s)simulation mode.
 	private char mode;
@@ -202,7 +199,6 @@ public class Machine {
 		Play play = null;
 		int hold1 = 0;
 		int hold2 = 0;
-		
 		if(deck.size() > 1) {
 			try {
 				hold1 = Integer.valueOf(feed.removeFirst());
@@ -216,10 +212,19 @@ public class Machine {
 					System.out.println("-cmd h " + hold1 + " " + hold2);
 					System.out.println("Player's hand " + hand);
 					
-					if(play == Play.OTHER)
+					
+					statistics.sum(play);
+
+					
+					
+					if(play == Play.OTHER) {
 						System.out.println("player loses and his credit is " + credit);
-					else
+						System.out.println(statistics);
+					}
+					else {
 						System.out.println("players wins with a " + play + " and his credit is " + credit + bet);
+						System.out.println(statistics);
+					}
 					System.out.println();
 				}
 				else {
