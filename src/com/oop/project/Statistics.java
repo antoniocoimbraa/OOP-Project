@@ -17,7 +17,7 @@ public class Statistics {
 	public void setCredit(int credit) {
 		this.credit = credit;
 	}
-	
+
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}

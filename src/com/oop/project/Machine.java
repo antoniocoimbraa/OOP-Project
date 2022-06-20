@@ -114,14 +114,14 @@ public class Machine {
 		this.deck = Card.newDeck();
 		this.nbdeals = Integer.valueOf(cmdEntry3);
 		
-		if(this.credit > 10)
+		if(this.bet > 10)
 			this.credit = 5;
 		
-		while(nbdeals != 0 && (credit - bet) > 0) {
+		while(nbdeals != 0 && (credit - bet) >= 0) {
 			deck = Card.newDeck();
 			deck = shuffleDeck(deck);
 			hand = new PokerHand(drawCard(5).toArray());
-			Play play = Play.check(hand.getHand().toArray());
+			
 			Advice adv = new Advice(hand);
 			List<Card> aCards = adv.whatsAdvised();
 			int i = 0;
@@ -130,12 +130,19 @@ public class Machine {
 					hand = hand.hold(i+1, drawCard(1).toArray());
 				i++;
 			}
+			
+			Play play = Play.check(hand.getHand().toArray());
 			statistics.sum(play);
-			credit = credit - bet;
+			if(play.equals(Play.OTHER))
+				credit = credit - bet;
+			else
+				credit = credit - bet*Bonus.bonus(hand);
 			nbdeals--;
 		}
 		
 		System.out.println("(Simulation mode)\n");
+		statistics.setBalance(this.balance);
+		statistics.setCredit(this.credit);
 		System.out.println(statistics);
 		System.out.println("(End of simulation mode)");
 	}
