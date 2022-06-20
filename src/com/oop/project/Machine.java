@@ -218,8 +218,8 @@ public class Machine {
 			if(cmdAux != null) {
 				if(cmdAux.equals(Command.BET)) {
 					if(bet) {
-						this.credit = this.credit - this.bet;
-						System.out.println("");
+						//this.credit = this.credit - this.bet;
+						System.out.println(" " + this.bet);
 						System.out.println("Player is betting " + this.bet);
 						System.out.println("");
 						bet = false;
@@ -262,7 +262,7 @@ public class Machine {
 				if(cmdAux.equals(Command.CREDIT)) {
 					if(bet) {
 						//this.credit = this.credit - this.bet;
-						System.out.println("");
+						System.out.println(" " + this.bet);
 						System.out.println("Player is betting " + this.bet);
 						System.out.println("");
 						bet = false;
@@ -277,6 +277,7 @@ public class Machine {
 						}
 						play = Play.check(hand.getHand().toArray());
 						statistics.sum(play);
+						System.out.println();
 						System.out.println("Player's hand " + hand.toString());
 						
 						if(play.equals(Play.OTHER)) {
@@ -305,7 +306,7 @@ public class Machine {
 				if(cmdAux.equals(Command.DEAL)) {
 					if(bet) {
 						//this.credit = this.credit - this.bet;
-						System.out.println("");
+						System.out.println(" " + this.bet);
 						System.out.println("Player is betting " + this.bet);
 						System.out.println("");
 						bet = false;
@@ -357,7 +358,7 @@ public class Machine {
 				
 				if(cmdAux.equals(Command.HOLD)) {
 					if(bet) {
-						System.out.println("");
+						System.out.println(" " + this.bet);
 						System.out.println("Player is betting " + this.bet);
 						System.out.println("");
 						bet = false;
@@ -397,7 +398,7 @@ public class Machine {
 					if(deal) {
 						if(!hold) {
 							hold = true;
-							System.out.println("-cmd " + Command.HOLD.getCommand());
+							System.out.print("-cmd " + Command.HOLD.getCommand());
 						}
 						else {
 							System.out.println("-cmd " + Command.HOLD.getCommand());
@@ -415,7 +416,7 @@ public class Machine {
 				if(cmdAux.equals(Command.ADVICE)) {
 					if(bet) {
 						//this.credit = this.credit - this.bet;
-						System.out.println("");
+						System.out.println(" " + this.bet);
 						System.out.println("Player is betting " + this.bet);
 						System.out.println("");
 						bet = false;
@@ -446,17 +447,36 @@ public class Machine {
 									play + " and his credit is " + credit);
 							System.out.println();
 						}
-
+						
 						hld = new boolean[] {false,false,false,false,false};
 						deal = false;
 						hold = false;
+					}
+					
+					if(deal && !hold) {
+						i = 0;
+						Advice adv = new Advice(hand);
+						List<Card> aCards = adv.whatsAdvised();
+						System.out.println("-cmd "+Command.ADVICE.getCommand());
+						System.out.print("player should hold cards");
+						for(Card card:hand.getHand()) {
+							if(aCards.contains(card)) {
+								System.out.print(" " + (i+1));
+								i++;
+							}
+						}
+						System.out.println();
+						System.out.println();
+					} else {
+						System.out.println("-cmd "+Command.ADVICE.getCommand());
+						System.out.println("No advices to give.");
 					}
 				}
 				
 				if(cmdAux.equals(Command.STATISTICS)) {
 					if(bet) {
 						this.credit = this.credit - this.bet;
-						System.out.println("");
+						System.out.println(" " + this.bet);
 						System.out.println("Player is betting " + this.bet);
 						System.out.println("");
 						bet = false;
@@ -507,7 +527,7 @@ public class Machine {
 					if(bet) {
 						if(num > 0 && num < 6) {
 							this.bet = num;
-							System.out.println();
+							System.out.println(" " + this.bet);
 							System.out.println("Player is betting " + num);
 							System.out.println("");
 						}

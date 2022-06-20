@@ -1179,6 +1179,7 @@ public class Advice {
 		if(empty[38] && empty[39]) 
 			return bigList.get(38);
 		
+		// 
 		for(int i = 0; i < bigList.size(); i++)
 			if(!bigList.get(i).isEmpty())
 				return bigList.get(i);
