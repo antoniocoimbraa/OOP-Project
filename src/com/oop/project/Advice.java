@@ -569,9 +569,7 @@ public class Advice {
 	
 	// 34. DISCARD 
 	
-	public List<Card> whatsAdvised() {
-		List<Card> list = new LinkedList<>();
-		
+	public List<Card> whatsAdvised() {		
 		List<List<Card>> bigList = new LinkedList<>();
 		boolean[] empty = null;
 		
