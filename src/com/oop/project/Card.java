@@ -57,7 +57,6 @@ class Card implements Comparable<Card> {
 				deck.addLast(new Card(rank,suit));
 	}
 	
-	
 	/**
 	 * Compares if two cards are neighbours by rank
 	 * 

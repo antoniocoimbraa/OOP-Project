@@ -44,6 +44,11 @@ public class Machine {
 	private int nbdeals = 0;
 	
 	// CONSTRUCTOR
+	/**
+	 * Constructor for class Machine
+	 * 
+	 * @param args that are given as input from main
+	 */
 	Machine(String[] args) {		
 		//try {
 			this.mode = args[0].charAt(1);
@@ -96,7 +101,14 @@ public class Machine {
 				cardFile + deck + 
 				end;
 	}
-	
+
+	/**
+	 * Starts machine in debug mode
+	 * 
+	 * @param cmdEntry1 value of credits passed as argument
+	 * @param cmdEntry2 name of command file passed as argument
+	 * @param cmdEntry3 name of card file passed as argument
+	 */
 	private void Debug(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
 		this.cardFile = cmdEntry3;
 		String[] cmds = parse(cmdEntry2);
@@ -108,6 +120,13 @@ public class Machine {
 		play();
 	}
 	
+	/**
+	 * Starts machine in simulation mode
+	 * 
+	 * @param cmdEntry1 credits passed by argument
+	 * @param cmdEntry2 value of bet passed by argument
+	 * @param cmdEntry3 total number of bets
+	 */
 	private void Simulation(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
 		this.credit = Integer.valueOf(cmdEntry1);
 		this.bet = Integer.valueOf(cmdEntry2);
@@ -149,6 +168,12 @@ public class Machine {
 		System.out.println("(End of simulation mode)");
 	}
 	
+	/**
+	 * Parses the files given their name. Only used for debug mode.
+	 * 
+	 * @param fileName fileName is the name of the file we want to parse.
+	 * @return returns the String of commands or cards (depends on what file is being parsed)
+	 */
 	private static String[] parse(String fileName) {
 		File fp = new File(fileName);
 		Scanner sc = null;
@@ -168,6 +193,10 @@ public class Machine {
 		}
 	}
 	
+	/**
+	 * Runs machine in debug mode
+	 * @return void
+	 */
 	private void play() {
 		int i = 0;
 		int index = 0;
@@ -538,6 +567,12 @@ public class Machine {
 		}
 	}
 	
+	/**
+	 * Draws n cards from the deck and removes them.
+	 * 
+	 * @param numberOfDraws number of cards to draw from the deck.
+	 * @return Queue of cards we want to daw from the deck
+	 */
 	public Deque<Card> drawCard(int numberOfDraws) {
 		Deque<Card> deck = new LinkedList<Card>();
 		for(int i = 0; i < numberOfDraws; i++) {
@@ -550,6 +585,12 @@ public class Machine {
 		return new LinkedList<Card>(deck);
 	}
 	
+	/**
+	 * Shuffles a deck
+	 * 
+	 * @param deck we want to shuffle
+	 * @return returns the deck passed in parameter, shuffled.
+	 */
 	public Deque<Card> shuffleDeck(Deque<Card> deck) {
 		List<Card> sorted = new ArrayList<Card>(deck);
 		Collections.shuffle(sorted);

@@ -7,7 +7,7 @@ enum Suit {
 	
 	private final String suit;
 	private static final HashMap<String,Suit> map;
-	
+
 	/**
 	 * Constructor to initialize enum class
 	 * 

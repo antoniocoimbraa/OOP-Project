@@ -12,6 +12,11 @@ public class Advice {
 	private final Map<Rank,Integer> rankHits = new HashMap<>();
 	private final Map<Suit,Integer> suitHits = new HashMap<>();
 	
+	/**
+	 * Constructor for class Advice
+	 * 
+	 * @param pokerhand
+	 */
 	Advice(PokerHand pokerhand) {
 		List<Card> hand = new LinkedList<>();
 		hand = pokerhand.getHand();
@@ -38,6 +43,12 @@ public class Advice {
 		}
 	}
 	
+	/**
+	 * Checks if card from hand are straight flush
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 1.1
 	private List<Card> straightFlush() {
 		List<Card> list = new LinkedList<>();
@@ -58,6 +69,12 @@ public class Advice {
 		return new LinkedList<>(list);
 	}
 	
+	/**
+	 * Checks if card from hand are four of a kind
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 1.2
 	private List<Card> fourOfAKind() {
 		List<Card> list = new LinkedList<>();
@@ -72,6 +89,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are royal flush
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 1.3
 	private List<Card> royalFlush() {
 		List<Card> list = new LinkedList<>();
@@ -91,6 +114,12 @@ public class Advice {
 		return new LinkedList<>(list);
 	}
 	
+	/**
+	 * Checks if card from hand are 4 to a royal flush
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 2.
 	private List<Card> fourToARoyalFlush() {
 		List<Card> list = new LinkedList<>();
@@ -131,6 +160,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 3 aces
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	//3.
 	private List<Card> threeAces() {
 		List<Card> list = new LinkedList<>();
@@ -144,6 +179,12 @@ public class Advice {
 			return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are straight
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 4.1
 	private List<Card> straight() {
 		List<Card> list = new LinkedList<>();
@@ -161,6 +202,12 @@ public class Advice {
 		return new LinkedList<>(list);
 	}
 	
+	/**
+	 * Checks if card from hand are flush
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 4.2
 	private List<Card> flush() {
 		List<Card> list = new LinkedList<>();
@@ -172,6 +219,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are full house
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 4.3
 	private List<Card> fullHouse() {
 		List<Card> list = new LinkedList<>();
@@ -188,6 +241,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are three of a kind
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	//5. NO ACES
 	private List<Card> threeOfAKind() {
 		Rank rank = null;
@@ -200,6 +259,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 4 to a straight flush
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 6. 
 	private List<Card> fourToAStraightFlush() {
 		List<Card> list = new LinkedList<>();
@@ -241,6 +306,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are two pair
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 7.
 	private List<Card> twoPair() {
 		List<Card> list = new LinkedList<>();
@@ -252,6 +323,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are high pair
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 8.
 	private List<Card> highPair() {
 		List<Card> list = new LinkedList<>();
@@ -269,6 +346,12 @@ public class Advice {
 		return new LinkedList<>(list);
 	}
 	
+	/**
+	 * Checks if card from hand are 4 to a flush
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 9.
 	private List<Card> fourToAFlush() {
 		for(Map.Entry<Suit,Integer> entry: suitHits.entrySet())
@@ -278,6 +361,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 3 to a royal flush
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 10.
 	private List<Card> threeToARoyalFlush() {
 		List<Card> list = new LinkedList<>();
@@ -314,6 +403,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 4 to an outside straight
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 11.
 	private List<Card> fourToAnOutsideStraight() {
 		List<Card> list = new LinkedList<>();
@@ -331,6 +426,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are low pair
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 12.
 	private List<Card> lowPair() {
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
@@ -341,6 +442,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are AKQJ unsuited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 13. 
 	private List<Card> akqjUnsuited() {
 		int high = 0;
@@ -351,6 +458,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 3 to a striaght flush (type 1)
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 14. TYPE 1
 	private List<Card> threeToAStraightFlush1() {
 		List<Card> list = new LinkedList<>();
@@ -392,6 +505,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 4 to an insisde striaght with 3 high cards
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 15.
 	private List<Card> fourToAnInsideStraightWith3HighCards() {
 		List<Card> list = new LinkedList<>();
@@ -433,6 +552,12 @@ public class Advice {
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are QJ suited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 16.
 	private List<Card> qjSuited() {
 		List<Card> list = new LinkedList<>();
@@ -453,70 +578,132 @@ public class Advice {
 		return new LinkedList<>(list);
 	}
 	
+	/**
+	 * Checks if card from hand are 3 to a flush with 2 high cards
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 17.
 	private List<Card> threeToAFlushWith2HighCards() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are 2 suited high cards
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 18.
 	private List<Card> twoSuitedHighCards() {
 		List<Card> list = new LinkedList<>();
-		
-		
-		
-		
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 4 to an insisde striaght with 2 high cards
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 19.
 	private List<Card> fourToAnInsideStraightWith2HighCards() {
 		List<Card> list = new LinkedList<>();
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are 3 to a straight flush (type 2)
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 20. TYPE 2
 	private List<Card> threeToAStraightFlush2() {
 		List<Card> list = new LinkedList<>();
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are four to an insisde straight with 1 high card
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 21.
 	private List<Card> fourToAnInsideStraightWith1HighCard() {
 		List<Card> list = new LinkedList<>();
 		return new LinkedList<>();
 	}
 	
+	/**
+	 * Checks if card from hand are KQJ unsuited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 22.
 	private List<Card> kqjUnsuited() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are JT Suited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 23.
 	private List<Card> jtSuited() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are QJ Unsuited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 24.
 	private List<Card> qjUnsuited() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are 3 to a Flush with 1 high card
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 25.
 	private List<Card> threeToAFlushWith1HighCard() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are QT suited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 26.
 	private List<Card> qtSuited() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are 3 to a straight flush (type3)
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 27. TYPE3
 	private List<Card> threeToAStraightFlush3() {
 		List<Card> list = new LinkedList<>();
@@ -524,54 +711,108 @@ public class Advice {
 		
 	}
 	
+	/**
+	 * Checks if card from hand are KQ unsuited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 28.1
 	private List<Card> kqUnsuited() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are KJ Unsuited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 28.2
 	private List<Card> kjUnsuited() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are ace
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 29.
 	private List<Card> ace() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are KT Suited
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 30.
 	private List<Card> ktSuited() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are jack
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 31.1
 	private List<Card> jack() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are queen
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 31.2
 	private List<Card> queen() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are king
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 31.3
 	private List<Card> king() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are 4 to an insisde striaght with no high cards
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 32.
 	private List<Card> fourToAnInsideStraightWithNoHighCards() {
 		List<Card> list = new LinkedList<>();
 		return list;
 	}
 	
+	/**
+	 * Checks if card from hand are 3 to a flush with no high cards 
+	 * and returns the cards that make it so.
+	 * 
+	 * @return list of cards advised to keep
+	 */
 	// 33.
 	private List<Card> threeToAFlushWithNoHighCards() {
 		List<Card> list = new LinkedList<>();
@@ -580,6 +821,11 @@ public class Advice {
 	
 	// 34. DISCARD 
 	
+	/**
+	 * Implements logic to deliver the list of cards advised
+	 * 
+	 * @return return the list of cards advised
+	 */
 	public List<Card> whatsAdvised() {		
 		List<List<Card>> bigList = new LinkedList<>();
 		boolean[] empty = null;

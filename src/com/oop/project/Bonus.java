@@ -7,7 +7,7 @@ package com.oop.project;
 public enum Bonus {
 	ROYALFLUSH(250),STRAIGHTFLUSH(50),FOURACES(160),FOUR24(80),FOUR5K(50),
 	FULLHOUSE(10),FLUSH(7),STRAIGHT(5),THREEOFAKIND(3),TWOPAIR(1),JACKSORBETTER(1);
-
+	
 	/**
 	 * Store the values of the plays multipliers 
 	*/
@@ -39,6 +39,12 @@ public enum Bonus {
 		return String.valueOf(bonus);
 	}
 	
+	/**
+	 * Returns the according bonus given a hand
+	 * 
+	 * @param hand hand is a PokerHand
+	 * @return value of the bonus
+	 */
 	public static Integer bonus(PokerHand hand) {
 		Object[] cards = hand.getHand().toArray();
 		Play play = Play.check(cards);

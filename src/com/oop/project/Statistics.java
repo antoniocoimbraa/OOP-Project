@@ -6,6 +6,10 @@ public class Statistics {
 	private int balance;
 	private int credit;
 	
+	/**
+	 * Constructor for statistics class
+	 * @param balance
+	 */
 	Statistics(int balance) {
 		int i = 0;
 		for(i = 0; i < size; i++)
@@ -14,14 +18,28 @@ public class Statistics {
 		this.balance = balance;
 	}
 	
+	/**
+	 * Sets credit paramenter
+	 * @param credit type int. total ammount of credits
+	 */
 	public void setCredit(int credit) {
 		this.credit = credit;
 	}
 
+	/**
+	 * Sets balance parameter from class.
+	 * 
+	 * @param balance
+	 */
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
 	
+	/**
+	 * It add one more play to the statistics given a Play class
+	 * @param play is of type Class. Should contain the play to add.
+	 * @return returns the play added
+	 */
 	public String sum(Play play) {
 		int index = play.ordinal();
 		int sum = ++statistics[index];
@@ -29,6 +47,10 @@ public class Statistics {
 		return String.valueOf(sum);
 	}
 	
+	/**
+	 * returns the total amount of plays. (Play.OHTER included)
+	 * @return
+	 */
 	private int total() {
 		int tot = 0;
 		for(int i = 0; i < size;i++) 
@@ -36,6 +58,10 @@ public class Statistics {
 		return tot;
 	}
 	
+	/**
+	 * Returns a percentage given initial balance and current credits
+	 * @return percentage returned 
+	 */
 	private double percentage() {
 		Double resb = Double.valueOf(balance);
 		Double resc = Double.valueOf(credit);

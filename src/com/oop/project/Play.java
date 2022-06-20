@@ -11,19 +11,35 @@ enum Play {
 	THREEOFAKIND("THREE OF A KIND"), STRAIGHT("STRAIGHT"), FLUSH("FLUSH"),
 	FULLHOUSE("FULL HOUSE"), FOUROFAKIND("FOUR OF A KIND"), 
 	STRAIGHTFLUSH("STRAIGHT FLUSH"), ROYALFLUSH("ROYAL FLUSH");
-	
+
 	private final String play;
 	private static Map<Rank,Integer> rankHits = new HashMap<Rank,Integer>();
 	private static Map<Suit,Integer> suitHits = new HashMap<Suit,Integer>();
 	
+	/**
+	 * Constructor for enum type
+	 * 
+	 * @param play String type. Stores the name of the Enum. 
+	 */
 	Play(String play) {
 		this.play = play;
 	}
 	
+	/**
+	 * Gets the play value of the enum
+	 * 
+	 * @return String type
+	 */
 	public String getPlay() {
 		return play;
 	}
 	
+	/**
+	 * Receives an array of cards and processes it.
+	 * It stores the total number of ranks and suits in a rank map and a suit map.
+	 * 
+	 * @param cards
+	 */
 	private static void hits(Object[] cards) {
 		Integer countRank = null;
 		Integer countSuit = null;
@@ -52,6 +68,11 @@ enum Play {
 		}
 	}
 	
+	/**
+	 * Checks if array of cards matches Jack or better play 
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean jackOrBetter(Object[] cards) {
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
 			if(Rank.JACK.compareTo(entry.getKey()) <= 0)
@@ -60,6 +81,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches flush play
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean flush(Object[] cards) {
 		for(Map.Entry<Suit,Integer> entry: suitHits.entrySet())
 			if(entry.getValue() == 5)
@@ -67,6 +93,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches four aces
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	public static boolean FOURACES(Object[] cards) {		
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
 			if(entry.getValue() == 4)
@@ -74,6 +105,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches four 2 to a 4
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	public static boolean FOUR24(Object[] cards) {		
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
 			if(entry.getValue() == 4)
@@ -83,6 +119,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches four 5 to a K
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	public static boolean FOUR5K(Object[] cards) {		
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
 			if(entry.getValue() == 4)
@@ -92,6 +133,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches four of a Kind
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean fourOfAKind(Object[] cards) {		
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
 			if(entry.getValue() == 4)
@@ -99,6 +145,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches Full House
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean fullHouse(Object[] cards) {
 		boolean pair = false;
 		boolean threes = false;
@@ -110,6 +161,11 @@ enum Play {
 		return pair && threes;
 	}
 	
+	/**
+	 * Checks if array of cards matches Royal Flush
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean royalFlush(Object[] cards) {
 		List<Card> sortedList = new ArrayList<>();
 		for(Object obj:cards)
@@ -137,6 +193,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches~straight
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean straigth(Object[] cards) {
 		List<Card> sortedList = new ArrayList<>();
 		for(Object obj:cards)
@@ -156,6 +217,11 @@ enum Play {
 		return true;
 	}
 	
+	/**
+	 * Checks if array of cards matches striagth flush
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean straightFlush(Object[] cards) {
 		List<Card> sortedList = new ArrayList<>();
 		for(Object obj:cards)
@@ -179,6 +245,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches three of a kind
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean threeOfAKind(Object[] cards) {
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
 			if(entry.getValue() == 3)
@@ -186,6 +257,11 @@ enum Play {
 		return false;
 	}
 	
+	/**
+	 * Checks if array of cards matches two pair
+	 * @param Array of 5 cards (hand) to be tested
+	 * @return returns true if it detects a valid play. 0 otherwise.
+	 */
 	private static boolean twoPair(Object[] cards) {
 		int totPairs = 0;
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
@@ -194,6 +270,12 @@ enum Play {
 		return totPairs>1;
 	}
 	
+	/**
+	 * Implementes the logic on the five cards and picks the and.
+	 * If it detects none return OTHER command type.
+	 * @param cards an array of 5 Object cards
+	 * @return enum of type Play. 
+	 */
 	public static Play check(Object[] cards) {
 		hits(cards);
 		
