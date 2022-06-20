@@ -20,7 +20,7 @@ enum Rank {
 	Rank(String rank) {
 		this.rank = rank;
 	}
-	
+
 	/**
 	 * Generated getter method to get rank value.
 	 * 

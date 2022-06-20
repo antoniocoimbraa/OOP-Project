@@ -19,7 +19,7 @@ enum Play {
 	Play(String play) {
 		this.play = play;
 	}
-
+	
 	public String getPlay() {
 		return play;
 	}

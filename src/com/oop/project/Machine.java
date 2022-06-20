@@ -45,7 +45,7 @@ public class Machine {
 	
 	// CONSTRUCTOR
 	Machine(String[] args) {		
-		try {
+		//try {
 			this.mode = args[0].charAt(1);
 		
 			String cmdEntry1 = args[1];
@@ -58,9 +58,11 @@ public class Machine {
 					default: 
 						System.out.println(""); break;
 			}
+		/*
 		} catch(IndexOutOfBoundsException e) {
 			System.out.println("Invalide mode. Pick 'd' or 's'.");
 		}
+		*/
 	}
 	
 	@Override
