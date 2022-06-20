@@ -2,6 +2,7 @@ package com.oop.project;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Objects;
 
 class Card implements Comparable<Card> {
 	
@@ -33,7 +34,7 @@ class Card implements Comparable<Card> {
 	public String toString() {
 		return rank.getRank() + suit.getSuit();
 	}
-	
+
 	static {
 		for(Suit suit: Suit.values())
 			for(Rank rank: Rank.values())
@@ -62,7 +63,7 @@ class Card implements Comparable<Card> {
 	public static Deque<Card> newDeck() {
 		return new ArrayDeque<Card>(deck);
 	}
-	
+
 	public static Deque<Card> newDeck(String[] cards) {
 		Deque<Card> deck = new ArrayDeque<Card>();
 		
@@ -79,5 +80,22 @@ class Card implements Comparable<Card> {
 		}
 		
 		return new ArrayDeque<Card>(deck);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(rank, suit);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Card other = (Card) obj;
+		return rank == other.rank && suit == other.suit;
 	}
 }

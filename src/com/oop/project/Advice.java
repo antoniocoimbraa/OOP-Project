@@ -9,8 +9,8 @@ import java.util.Map;
 public class Advice {
 	private final static int handSize = 5;
 	private final List<Card> hand = new LinkedList<>();
-	private final static Map<Rank,Integer> rankHits = new HashMap<>();
-	private final static Map<Suit,Integer> suitHits = new HashMap<>();
+	private final Map<Rank,Integer> rankHits = new HashMap<>();
+	private final Map<Suit,Integer> suitHits = new HashMap<>();
 	
 	Advice(PokerHand pokerhand) {
 		List<Card> hand = new LinkedList<>();
@@ -254,12 +254,19 @@ public class Advice {
 	
 	// 8.
 	private List<Card> highPair() {
+		List<Card> list = new LinkedList<>();
+		Rank rank = null;
 		for(Map.Entry<Rank,Integer> entry: rankHits.entrySet())
-			if(Rank.JACK.compareTo(entry.getKey()) >= 0)
-				if(entry.getValue() == 2);
-					//return true;
-		//return false;
-		return new LinkedList<>();
+			if(Rank.JACK.compareTo(entry.getKey()) <= 0)
+				if(entry.getValue() == 2) {
+					list = new LinkedList<>();
+					rank = entry.getKey();
+					for(Card card:hand) {
+						if(card.getRank().equals(rank))
+							list.add(card);
+					}
+				}
+		return new LinkedList<>(list);
 	}
 	
 	// 9.
@@ -455,7 +462,11 @@ public class Advice {
 	// 18.
 	private List<Card> twoSuitedHighCards() {
 		List<Card> list = new LinkedList<>();
-		return list;
+		
+		
+		
+		
+		return new LinkedList<>();
 	}
 	
 	// 19.
@@ -619,9 +630,9 @@ public class Advice {
 		
 		for(int i = 0; i < bigList.size(); i++) {
 			if(bigList.get(i).isEmpty())
-				empty[i] = true;
-			else
 				empty[i] = false;
+			else
+				empty[i] = true;
 		}
 		
 		// Difficult hands
@@ -889,7 +900,7 @@ public class Advice {
 			return bigList.get(33);
 		if(empty[33] && empty[37]) 
 			return bigList.get(33);
-		
+	
 		// 75
 		if(empty[33] && empty[38]) 
 			return bigList.get(33);

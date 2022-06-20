@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 enum Command {
 	BET("b"), CREDIT("$"), DEAL("d"), HOLD("h"), ADVICE("a"), STATISTICS("s");
-	
+
 	private final String command;
 	private final static HashMap<String,Command> map;
 	

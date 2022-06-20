@@ -47,7 +47,7 @@ public class Machine {
 	Machine(String[] args) {		
 		try {
 			this.mode = args[0].charAt(1);
-			
+		
 			String cmdEntry1 = args[1];
 			String cmdEntry2 = args[2];
 			String cmdEntry3 = args[3];
@@ -103,24 +103,33 @@ public class Machine {
 			feed.add(cmd);
 		this.commandFile = cmdEntry2;
 		this.deck = Card.newDeck(parse(cmdEntry3));
-		
 		play();
 	}
 	
 	private void Simulation(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
+		this.credit = Integer.valueOf(cmdEntry1);
 		this.bet = Integer.valueOf(cmdEntry2);
 		this.cardFile = "(no file needed for simulation mode)";
 		this.commandFile = "(no file neede for simulation mode)";
 		this.deck = Card.newDeck();
 		this.nbdeals = Integer.valueOf(cmdEntry3);
 		
-		while(nbdeals != 0 && credit != 0) {
+		if(this.credit > 10)
+			this.credit = 5;
+		
+		while(nbdeals != 0 && (credit - bet) > 0) {
 			deck = Card.newDeck();
 			deck = shuffleDeck(deck);
 			hand = new PokerHand(drawCard(5).toArray());
 			Play play = Play.check(hand.getHand().toArray());
 			Advice adv = new Advice(hand);
-			System.out.println(adv.whatsAdvised());
+			List<Card> aCards = adv.whatsAdvised();
+			int i = 0;
+			for(Card card:hand.getHand()) {
+				if(!aCards.contains(card))
+					hand = hand.hold(i+1, drawCard(1).toArray());
+				i++;
+			}
 			statistics.sum(play);
 			credit = credit - bet;
 			nbdeals--;

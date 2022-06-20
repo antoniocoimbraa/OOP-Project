@@ -7,7 +7,7 @@ public class PokerHand {
 	
 	private final static int handSize = 5;
 	private final List<Card> hand = Arrays.asList(new Card[handSize]);
-
+	
 	PokerHand(Object[] cards) {
 		int i = 0;
 		for(i = 0; i < 5; i++)
@@ -32,7 +32,7 @@ public class PokerHand {
 		}
 		return new PokerHand(hand.toArray());
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";

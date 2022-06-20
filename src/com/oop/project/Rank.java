@@ -29,7 +29,7 @@ enum Rank {
 	public String getRank() {
 		return rank;
 	}
-	
+
 	/**
 	 * Initializes a hashmap That helps finding the corresponding rank
 	 * through String rank paramenter.
