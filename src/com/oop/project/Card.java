@@ -59,7 +59,6 @@ class Card implements Comparable<Card> {
 			return true;
 		return false;
 	}
-	
 	public static Deque<Card> newDeck() {
 		return new ArrayDeque<Card>(deck);
 	}

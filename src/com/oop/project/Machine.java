@@ -2,7 +2,6 @@ package com.oop.project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
@@ -28,13 +27,15 @@ public class Machine {
 	// Store the total amount of credits available to the player.
 	private int credit = 10000;
 	
+	private final int balance = credit;
+	
 	// Stores list of cards
 	private Deque<Card> deck = new LinkedList<>();
 	
-	// 
+	// Store the current hand being played
 	private PokerHand hand;
 	
-	private final Statistics statistics = new Statistics();
+	private final Statistics statistics = new Statistics(balance);
 	
 	// Stores game mode type. (d)debug mode or (s)simulation mode.
 	private char mode;
@@ -61,7 +62,7 @@ public class Machine {
 			System.out.println("Invalide mode. Pick 'd' or 's'.");
 		}
 	}
-
+	
 	@Override
 	public String toString() {
 		String mode = String.valueOf(this.mode);
@@ -102,6 +103,8 @@ public class Machine {
 			feed.add(cmd);
 		this.commandFile = cmdEntry2;
 		this.deck = Card.newDeck(parse(cmdEntry3));
+		
+		play();
 	}
 	
 	private void Simulation(String cmdEntry1, String cmdEntry2, String cmdEntry3) {
@@ -110,6 +113,22 @@ public class Machine {
 		this.commandFile = "(no file neede for simulation mode)";
 		this.deck = Card.newDeck();
 		this.nbdeals = Integer.valueOf(cmdEntry3);
+		
+		while(nbdeals != 0 && credit != 0) {
+			deck = Card.newDeck();
+			deck = shuffleDeck(deck);
+			hand = new PokerHand(drawCard(5).toArray());
+			Play play = Play.check(hand.getHand().toArray());
+			Advice adv = new Advice(hand);
+			System.out.println(adv.whatsAdvised());
+			statistics.sum(play);
+			credit = credit - bet;
+			nbdeals--;
+		}
+		
+		System.out.println("(Simulation mode)\n");
+		System.out.println(statistics);
+		System.out.println("(End of simulation mode)");
 	}
 	
 	private static String[] parse(String fileName) {
@@ -131,7 +150,7 @@ public class Machine {
 		}
 	}
 	
-	public void play() {
+	private void play() {
 		int i = 0;
 		int index = 0;
 		boolean bet = false;
@@ -429,6 +448,8 @@ public class Machine {
 					
 					System.out.println("-cmd " + Command.STATISTICS.getCommand());
 					System.out.println("Printing statistics...");
+					statistics.setBalance(this.balance);
+					statistics.setCredit(this.credit);
 					System.out.println(statistics);
 				}
 			}
@@ -511,10 +532,9 @@ public class Machine {
 		return new LinkedList<Card>(deck);
 	}
 	
-	public String shuffleDeck() {
-		List<Card> deck = new LinkedList<Card>(this.deck);
-		Collections.shuffle(deck);
-		this.deck = new ArrayDeque<Card>(deck);
-		return this.deck.toString(); 
+	public Deque<Card> shuffleDeck(Deque<Card> deck) {
+		List<Card> sorted = new ArrayList<Card>(deck);
+		Collections.shuffle(sorted);
+		return new LinkedList<>(sorted); 
 	}
 }

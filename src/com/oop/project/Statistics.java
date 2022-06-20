@@ -3,13 +3,23 @@ package com.oop.project;
 public class Statistics {
 	private final static int size = Play.values().length;
 	private final static int[] statistics = new int[size];
+	private int balance;
+	private int credit;
 	
-	Statistics() { }
-	
-	static {
+	Statistics(int balance) {
 		int i = 0;
 		for(i = 0; i < size; i++)
 			statistics[i] = 0;
+		
+		this.balance = balance;
+	}
+	
+	public void setCredit(int credit) {
+		this.credit = credit;
+	}
+	
+	public void setBalance(int balance) {
+		this.balance = balance;
 	}
 	
 	public String sum(Play play) {
@@ -19,32 +29,26 @@ public class Statistics {
 		return String.valueOf(sum);
 	}
 	
-	// TODO:
-	public String balance() {
-		int balance = 0;
-		return String.valueOf(balance);
+	private int total() {
+		int tot = 0;
+		for(int i = 0; i < size;i++) 
+			tot = tot + statistics[i];
+		return tot;
 	}
 	
-	// TODO:
-	public String percentage() {
-		int percentage = 0;
-		return String.valueOf(percentage);
+	private double percentage() {
+		Double resb = Double.valueOf(balance);
+		Double resc = Double.valueOf(credit);
+		return resc/resb * 100;
 	}
 	
-	public String total() {
-		int i = 0;
-		int total = 0;
-		for(i = 0; i < size;i++)
-			total = total + statistics[i];
-		return String.valueOf(total);
-	}
 	
 	@Override
 	public String toString() {
 		String header = "Hand\t\t\t   Nb\n";
-		String total = String.format("Total\t\t\t    %s\n", total());
-		String balance = String.format("Credit\t\t\t%s (%s%s)\n",balance(),percentage(),"%");
-		String line = "-------------------------------\n";
+		String total = String.format("Total\t\t\t    %s\n",total());
+		String balance = String.format("Credit\t\t\t%s (%.2f%s)\n",this.credit,percentage(),"%");
+		String line = "-----------------------------------\n";
 		String body = "";
 		
 		int index = 0;
